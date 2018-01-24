@@ -1,0 +1,27 @@
+{
+  "name": "bigfish",
+  "version": "1.0.0",
+  "description": "![Big Fish](http://dabeng.github.io/bigfish/img/logo.svg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dabeng/bigfish.git"
+  },
+  "keywords": [
+    "vue",
+    "vue.js",
+    "vuejs"
+  ],
+  "author": "dabeng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dabeng/bigfish/issues"
+  },
+  "homepage": "https://github.com/dabeng/bigfish#readme",
+  "dependencies": {
+    "jquery": "^2.2.4"
+  }
+}
