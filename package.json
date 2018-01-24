@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/dabeng/bigfish#readme",
   "dependencies": {
-    "jquery": "^2.2.4"
+    "jquery": "~3.2.1"
   }
 }
