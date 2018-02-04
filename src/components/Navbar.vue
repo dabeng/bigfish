@@ -20,14 +20,18 @@
     display: inline-block;
   }
   .directory-tree a {
-    width: 100%;
     display: inline-block;
+    width: 100%;
+    padding: 5px 10px;
     color: inherit;
     text-decoration: inherit;
   }
   li {
     list-style-type: none;
-    margin-top: 10px;
+  }
+  a:hover {
+    color: #fff;
+    background-color: #000;
   }
   .directory-tree>li:first-child {
     margin-top:0;
