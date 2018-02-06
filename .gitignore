@@ -1,4 +1,5 @@
 package-lock.json
+firebase-debug.log
 .DS_Store
 node_modules/
 /dist/
