@@ -1,16 +1,21 @@
 <template>
-  <Navbar/>
+  <div>
+    <Navbar/>
+    <Fishes/>
+  </div>
 </template>
 <style scoped>
 
 </style>
 <script>
 import Navbar from './Navbar.vue'
+import Fishes from './Fishes.vue'
 
 export default {
   name: 'Index',
   components: {
-    Navbar
+    Navbar,
+    Fishes
   }
 }
 </script>
