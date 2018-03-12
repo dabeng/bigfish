@@ -1,8 +1,9 @@
 <template>
   <div class="login">
-    <h3>Sign In</h3>
-    <input type="text" placeholder="Email"><br>
-    <input type="password" placeholder="Password"><br>
+    <img src="../assets/logo.png">
+    <h1>Sign In</h1>
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Password">
     <button @click="login">Connection</button>
     <p>You don't have an account ? You can <router-link to="/signup">create one</router-link></p>
   </div>
@@ -10,20 +11,23 @@
 <style scoped>
   .login {
     margin-top: 40px;
+    text-align: center;
   }
   input {
-    margin: 10px 0;
+    display: block;
+    margin: 0 auto 10px;
     width: 20%;
-    padding: 15px;
+    min-width: 200px;
+    padding: 5px 15px;
   }
   button {
-    margin-top: 20px;
-    width: 10%;
+    margin-top: 30px;
+    padding: 5px 15px;
+    min-width: 100px;
     cursor: pointer;
   }
   p {
-    margin-top: 40px;
-    font-size: 13px;
+    margin-top: 10px;
   }
   p a {
     text-decoration: underline;
