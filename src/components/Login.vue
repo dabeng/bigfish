@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img src="../assets/logo.png">
+    <img src="../assets/logo.jpg">
     <h1>Sign In</h1>
     <input type="text" placeholder="Email">
     <input type="password" placeholder="Password">
@@ -10,20 +10,17 @@
 </template>
 <style scoped>
   .login {
-    margin-top: 40px;
     text-align: center;
+    padding: 20px;
   }
   input {
     display: block;
     margin: 0 auto 10px;
-    width: 20%;
-    min-width: 200px;
+    width: 200px;
     padding: 5px 15px;
   }
   button {
-    margin-top: 30px;
     padding: 5px 15px;
-    min-width: 100px;
     cursor: pointer;
   }
   p {
