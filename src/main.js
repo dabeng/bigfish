@@ -7,8 +7,8 @@ import firebase from 'firebase'
 
 Vue.config.productionTip = false
 
-// Initialize Firebase
-const config = {
+let app
+let config = {
   apiKey: 'AIzaSyA3yA8WnP4iMVspXqA83XWsOPtQ4NMPjpw',
   authDomain: 'bigfish-f0a80.firebaseapp.com',
   databaseURL: 'https://bigfish-f0a80.firebaseio.com',
@@ -16,12 +16,20 @@ const config = {
   storageBucket: 'bigfish-f0a80.appspot.com',
   messagingSenderId: '279103206853'
 }
-firebase.initializeApp(config)
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+firebase.initializeApp(config)
+/*
+ * Placing vue app initialization code snippets in onAuthStateChanged can let
+ * firebase.auth().currentUser return real user's sign-in status
+ */
+firebase.auth().onAuthStateChanged(function (user) {
+  // Auth object has finished initializing
+  if (!app) {
+    app = new Vue({
+      el: '#app',
+      template: '<App/>',
+      components: { App },
+      router
+    })
+  }
 })

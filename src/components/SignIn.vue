@@ -1,10 +1,9 @@
 <template>
 <div class="login">
   <img src="../assets/logo.jpg">
-  <h1>Sign In</h1>
   <input type="text" placeholder="Email" v-model="email">
   <input type="password" placeholder="Password" v-model="password">
-  <button @click="login">Connection</button>
+  <button @click="login">Login</button>
   <p>You don't have an account ? You can <router-link to="/signup">create one</router-link></p>
 </div>
 </template>
@@ -45,6 +44,10 @@ export default {
   methods: {
     login: function () {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+        /*
+         * With ES6 arrow function, this is lexical, meaning that it does not create its own
+         * this context. Instead, this has the original meaning from the enclosing context.
+         */
         user => {
           this.$router.replace('index')
         },

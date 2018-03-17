@@ -26,7 +26,7 @@ const router = new Router({
     path: '/index',
     name: 'Index',
     component: Index,
-    requiresAuth: { meta: true }
+    meta: { requiresAuth: true }
   }]
 })
 
@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {
     if (!currentUser) {
-      next('login')
+      next('signin')
     } else {
       next()
     }

@@ -2,6 +2,7 @@
   <div>
     <Navbar/>
     <Fishes/>
+    <AccountMenu/>
   </div>
 </template>
 <style scoped>
@@ -10,12 +11,16 @@
 <script>
 import Navbar from './Navbar.vue'
 import Fishes from './Fishes.vue'
+import AccountMenu from './AccountMenu.vue'
 
 export default {
   name: 'Index',
   components: {
     Navbar,
-    Fishes
+    Fishes,
+    AccountMenu
+  },
+  methods: {
   }
 }
 </script>
