@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar/>
-    <Fishes/>
+    <MainContent/>
     <AccountMenu/>
   </div>
 </template>
@@ -10,14 +10,14 @@
 </style>
 <script>
 import Navbar from './Navbar.vue'
-import Fishes from './Fishes.vue'
+import MainContent from './MainContent.vue'
 import AccountMenu from './AccountMenu.vue'
 
 export default {
   name: 'Index',
   components: {
     Navbar,
-    Fishes,
+    MainContent,
     AccountMenu
   },
   methods: {

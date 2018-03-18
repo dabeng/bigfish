@@ -1,12 +1,12 @@
 <template>
   <ul class="directory-tree">
-    <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded }">
+    <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
       <a href="#!" @click="pNav.isExpanded = !pNav.isExpanded">{{ pNav.title }}</a>
       <ul v-if="pNav.children">
-        <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded }">
+        <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
           <a href="#!" @click="sNav.isExpanded = !sNav.isExpanded">{{ sNav.title }}</a>
           <ul v-if="sNav.children">
-            <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded }">
+            <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
               <a href="#!" @click="tNav.isExpanded = !tNav.isExpanded">{{ tNav.title }}</a>
             </li>
           </ul>
@@ -19,19 +19,25 @@
   .directory-tree {
     display: inline-block;
   }
-  .directory-tree a {
+  li {
+    list-style-type: none;
+  }
+  .hasChildren:before {
+    content: '›'
+  }
+  .hasChildren.expanded:before {
+    content: '›';
     display: inline-block;
-    width: 100%;
+    transform: rotate(90deg);
+  }
+  a {
+    display: inline-block;
     padding: 5px 10px;
     color: inherit;
     text-decoration: inherit;
   }
-  li {
-    list-style-type: none;
-  }
   a:hover {
-    color: #fff;
-    background-color: #000;
+    color: #b80036;
   }
   .directory-tree>li:first-child {
     margin-top:0;
