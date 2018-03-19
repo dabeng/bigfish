@@ -18,6 +18,7 @@
 <style scoped>
   .directory-tree {
     display: inline-block;
+    font-size: 18px;
   }
   li {
     list-style-type: none;
