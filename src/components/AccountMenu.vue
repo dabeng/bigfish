@@ -1,15 +1,26 @@
 <template>
   <div class="account-menu">
-    <button @click="logout">Logout</button>
+    <button>noti</button>
+    <button>Avatar</button>
     <button>switch layout</button>
-    <button>notifications</button>
+    <button @click="logout">Logout</button>
   </div>
 </template>
 <style scoped>
   .account-menu {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100px;
+    height: 100px;
     position: fixed;
     top: 5px;
     right: 5px;
+  }
+  .account-menu button {
+    border: 1px solid #000;
+    background-color: #fff;
+    height: 50px;
+    width: 50px;
   }
 </style>
 <script>
