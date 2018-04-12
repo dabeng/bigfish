@@ -1,6 +1,8 @@
 <template>
   <div class="account-menu">
     <button @click="logout">Logout</button>
+    <button>switch layout</button>
+    <button>notifications</button>
   </div>
 </template>
 <style scoped>

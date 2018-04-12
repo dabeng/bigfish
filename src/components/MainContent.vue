@@ -43,7 +43,8 @@
 </template>
 <style scoped>
   .main-content {
-    width: calc(100% - 180px);
+    width: calc(100% - 200px);
+    display: inline-block;
     float: right;
   }
   .image-gallery {

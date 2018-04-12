@@ -1,5 +1,5 @@
 <template>
-  <ul class="directory-tree">
+  <ul class="navbar">
     <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
       <a href="#!" @click="pNav.isExpanded = !pNav.isExpanded">{{ pNav.title }}</a>
       <ul v-if="pNav.children">
@@ -16,19 +16,20 @@
   </ul>
 </template>
 <style scoped>
-  .directory-tree {
+  .navbar {
     display: inline-block;
-    font-size: 18px;
+    font-size: 16px;
   }
   li {
     list-style-type: none;
   }
   .hasChildren:before {
-    content: '›'
+    content: '›';
+    position: absolute;
+    margin-top: 3px;
   }
   .hasChildren.expanded:before {
     content: '›';
-    display: inline-block;
     transform: rotate(90deg);
   }
   a {
