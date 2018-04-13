@@ -18,8 +18,11 @@
 <style scoped>
   .navbar {
     position: fixed;
+    background-color: rgba(0, 0, 0, .5);
     display: inline-block;
     font-size: 16px;
+    color: #ccc;
+    margin: 4px;
   }
   .hasChildren:before {
     content: '›';
@@ -33,11 +36,11 @@
   a {
     display: inline-block;
     padding: 5px 10px;
-    color: #666;
+    color: #ccc;
     text-decoration: inherit;
   }
   a:hover, a:focus {
-    color: #000;
+    color: #fff;
   }
   a:focus {
     text-decoration-line: underline;

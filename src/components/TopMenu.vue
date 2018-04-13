@@ -1,9 +1,9 @@
 <template>
   <div class="top-menu" :class="{ expanded: isExpanded }">
-    <button id="btn-noti">✉</button>
-    <button class="fixed-item" id="btn-avatar" @click="expandMenu">☘</button>
-    <button id="btn-layout">⧉</button>
-    <button id="btn-logout" @click="logout">⎋</button>
+    <button id="btn-noti" title="notifications">✉</button>
+    <button class="fixed-item" id="btn-avatar" title="toggle top menu" @click="expandMenu">☘</button>
+    <button id="btn-layout" title="toggle layout">⧉</button>
+    <button id="btn-logout" title="logout" @click="logout">⎋</button>
   </div>
 </template>
 <style scoped>
@@ -37,20 +37,16 @@
   }
   #btn-noti, #btn-layout {
     margin-right: 2px;
-    font-weight: bold;
   }
   #btn-layout, #btn-logout {
     margin-top: 2px;
-  }
-  #btn-noti {
-    font-size: 28px;
   }
 </style>
 <script>
 import firebase from 'firebase'
 
 export default {
-  name: 'AccountMenu',
+  name: 'TopMenu',
   data: function () {
     return { isExpanded: false }
   },
