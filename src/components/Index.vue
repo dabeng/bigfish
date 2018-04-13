@@ -2,7 +2,7 @@
   <div>
     <Navbar/>
     <MainContent/>
-    <AccountMenu/>
+    <TopMenu/>
   </div>
 </template>
 <style scoped>
@@ -11,14 +11,14 @@
 <script>
 import Navbar from './Navbar.vue'
 import MainContent from './MainContent.vue'
-import AccountMenu from './AccountMenu.vue'
+import TopMenu from './TopMenu.vue'
 
 export default {
   name: 'Index',
   components: {
     Navbar,
     MainContent,
-    AccountMenu
+    TopMenu
   },
   methods: {
   }

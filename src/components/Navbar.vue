@@ -17,11 +17,9 @@
 </template>
 <style scoped>
   .navbar {
+    position: fixed;
     display: inline-block;
     font-size: 16px;
-  }
-  li {
-    list-style-type: none;
   }
   .hasChildren:before {
     content: '›';
@@ -35,11 +33,15 @@
   a {
     display: inline-block;
     padding: 5px 10px;
-    color: inherit;
+    color: #666;
     text-decoration: inherit;
   }
-  a:hover {
-    color: #b80036;
+  a:hover, a:focus {
+    color: #000;
+  }
+  a:focus {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
   }
   .directory-tree>li:first-child {
     margin-top:0;
