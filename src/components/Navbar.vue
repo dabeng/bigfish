@@ -21,8 +21,9 @@
     background-color: rgba(0, 0, 0, .5);
     display: inline-block;
     font-size: 16px;
-    color: #ccc;
+    color: #eee;
     margin: 4px;
+    width: 186px;
   }
   .hasChildren:before {
     content: '›';
@@ -36,13 +37,10 @@
   a {
     display: inline-block;
     padding: 5px 10px;
-    color: #ccc;
+    color: #eee;
     text-decoration: inherit;
   }
   a:hover, a:focus {
-    color: #fff;
-  }
-  a:focus {
     text-decoration-line: underline;
     text-decoration-style: solid;
   }

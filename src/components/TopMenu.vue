@@ -1,45 +1,40 @@
 <template>
-  <div class="top-menu" :class="{ expanded: isExpanded }">
-    <button id="btn-noti" title="notifications">✉</button>
-    <button class="fixed-item" id="btn-avatar" title="toggle top menu" @click="expandMenu">☘</button>
-    <button id="btn-layout" title="toggle layout">⧉</button>
-    <button id="btn-logout" title="logout" @click="logout">⎋</button>
-  </div>
+  <nav class="top-menu" :class="{ expanded: isExpanded }">
+    <a href="#" class="avatar" title="top menu" @click="expandMenu">☘</a>
+    <a href="#" class="message" title="message center">✉</a>
+    <a href="#" class="config" title="configurations">⚙</a>
+    <a href="#" class="layout" title="toggle layout">⧉</a>
+    <a href="#" class="logout" title="logout" @click="logout">➭</a>
+  </nav>
 </template>
 <style scoped>
   .top-menu {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     position: fixed;
-    top: 5px;
-    right: 5px;
+    top: 4px;
+    right: 4px;
   }
-  .top-menu.expanded {
-    width: 74px;
-    height: 74px;
-  }
-  .top-menu.expanded button {
+  .top-menu.expanded a {
     display: initial;
   }
-  .top-menu button {
-    color: #ccc;
-    border: none;
+  .top-menu a {
+    display: inline-block;
+    line-height: 35px;
+    width: 35px;
+    text-align: center;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #eee;
+    border: 1px solid transparent;
     background-color: rgba(0, 0, 0, .5);
-    height: 36px;
-    width: 36px;
     font-size: 24px;
   }
-  .top-menu button:hover {
-    color: #fff;
+  .top-menu a:hover {
+    border-color: #eee;
   }
-  .top-menu > *:not(.fixed-item) {
+  .top-menu > *:not(.avatar) {
     display: none;
-  }
-  #btn-noti, #btn-layout {
-    margin-right: 2px;
-  }
-  #btn-layout, #btn-logout {
-    margin-top: 2px;
   }
 </style>
 <script>
