@@ -1,48 +1,48 @@
 <template>
-  <ul class="navbar">
-    <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
-      <a href="#!" @click="pNav.isExpanded = !pNav.isExpanded">{{ pNav.title }}</a>
-      <ul v-if="pNav.children">
-        <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
-          <a href="#!" @click="sNav.isExpanded = !sNav.isExpanded">{{ sNav.title }}</a>
-          <ul v-if="sNav.children">
-            <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
-              <a href="#!" @click="tNav.isExpanded = !tNav.isExpanded">{{ tNav.title }}</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <nav role="navigation">
+    <ul>
+      <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
+        <a href="#!" @click="pNav.isExpanded = !pNav.isExpanded">{{ pNav.title }}</a>
+        <ul v-if="pNav.children">
+          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
+            <a href="#!" @click="sNav.isExpanded = !sNav.isExpanded">{{ sNav.title }}</a>
+            <ul v-if="sNav.children">
+              <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
+                <a href="#!" @click="tNav.isExpanded = !tNav.isExpanded">{{ tNav.title }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 </template>
 <style scoped>
-  .navbar {
+  nav {
     position: fixed;
-    background-color: rgba(0, 0, 0, .5);
-    display: inline-block;
     font-size: 16px;
     color: #eee;
-    margin: 4px;
-    width: 186px;
+    width: 185px;
+    border-right: 1px solid #fff;
   }
   .hasChildren:before {
-    content: '›';
-    position: absolute;
-    margin-top: 3px;
+    content: '+';
   }
   .hasChildren.expanded:before {
-    content: '›';
-    transform: rotate(90deg);
+    content: '–';
   }
   a {
     display: inline-block;
     padding: 5px 10px;
     color: #eee;
     text-decoration: inherit;
+    border: 1px solid transparent;
   }
   a:hover, a:focus {
-    text-decoration-line: underline;
-    text-decoration-style: solid;
+    border-color: #fff;
+  }
+  .hasChildren > a:focus {
+    border-color: transparent;
   }
   .directory-tree>li:first-child {
     margin-top:0;
@@ -64,63 +64,57 @@ export default {
   data: function () {
     return {
       navs: [
-        { title: 'Target Fish',
+        { title: '目标鱼',
           isExpanded: false,
           children: [
-            { title: 'Grass Carp' },
-            { title: 'Carp' },
-            { title: 'Silver Carp' },
-            { title: 'Bighead Carp' },
-            { title: 'Crucian Carp' },
-            { title: 'Blunt-snout Bream' },
-            { title: 'Yellow-head Catfish' },
-            { title: 'Black Carp' },
-            { title: 'Catfish' },
-            { title: 'Turtle' }
+            { title: '草鱼' },
+            { title: '鲤鱼' },
+            { title: '鲢鳙' },
+            { title: '鲫鱼' },
+            { title: '青鱼' }
           ]
         },
-        { title: 'Fishing Spot',
+        { title: '钓场',
           isExpanded: false,
           children: [
-            { title: 'Beijing' },
-            { title: 'Beidaihe' },
-            { title: 'Shi Jiazhuang' },
-            { title: 'Changchun' }
+            { title: '北京' },
+            { title: '北戴河' },
+            { title: '石家庄' },
+            { title: '长春' }
           ]
         },
-        { title: 'Equipments',
+        { title: '装备',
           isExpanded: false,
           children: [
-            { title: 'Fishing Pole' },
-            { title: 'Float' },
-            { title: 'Fishing Line' },
-            { title: 'Fishhook' }
+            { title: '鱼竿' },
+            { title: '鱼漂' },
+            { title: '鱼线' },
+            { title: '鱼钩' }
           ]
         },
-        { title: 'Fish Food',
+        { title: '鱼食',
           isExpanded: false,
           children: [
-            { title: 'Bait' },
-            { title: 'Feed' },
-            { title: 'Additive' }
+            { title: '饵料' },
+            { title: '窝料' }
           ]
         },
-        { title: 'Decision Support',
+        { title: '决策支持',
           isExpanded: false,
           children: [
-            { title: 'Data Analysis' },
-            { title: 'Fishing Spot Map' },
-            { title: 'Fishing Plan',
+            { title: '历史数据分析' },
+            { title: '钓场地图' },
+            { title: '钓鱼计划',
               isExpanded: false,
               children: [
-                { title: 'Robot Decision' },
-                { title: 'Team Discussion' }
+                { title: '机器人推荐' },
+                { title: '团队讨论' }
               ]
             },
-            { title: 'Select Position' }
+            { title: '选钓位' }
           ]
         },
-        { title: 'Fishing Log' }
+        { title: '钓鱼日志' }
       ]
     }
   }
