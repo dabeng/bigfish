@@ -2,13 +2,13 @@
   <nav role="navigation">
     <ul>
       <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
-        <a href="#!" @click="goto(pNav)">{{ pNav.title }}</a>
+        <a :href="pNav.url" @click="goto(pNav)">{{ pNav.title }}</a>
         <ul v-if="pNav.children">
           <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
-            <a href="#!" @click="goto(sNav)">{{ sNav.title }}</a>
+            <a :href="sNav.url" @click="goto(sNav)">{{ sNav.title }}</a>
             <ul v-if="sNav.children">
               <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
-                <a href="#!" @click="goto(tNav)">{{ tNav.title }}</a>
+                <a :href="tNav.url" @click="goto(tNav)">{{ tNav.title }}</a>
               </li>
             </ul>
           </li>
@@ -67,60 +67,66 @@ export default {
     return {
       navs: [
         { title: '目标鱼',
+          url: '#!',
           isExpanded: false,
           children: [
-            { title: '草鱼' },
-            { title: '鲤鱼' },
-            { title: '鲢鳙' },
-            { title: '鲫鱼' },
-            { title: '青鱼' }
+            { title: '草鱼', url: '/grass-carp' },
+            { title: '鲤鱼', url: '/common-carp' },
+            { title: '鲢鳙', ur: '/silver-carp-bighead' },
+            { title: '鲫鱼', url: '/crucian-carp' },
+            { title: '青鱼', url: '/black-carp' }
           ]
         },
         { title: '钓场',
+          url: '#!',
           isExpanded: false,
           children: [
-            { title: '北京' },
-            { title: '北戴河' },
-            { title: '石家庄' },
-            { title: '长春' }
+            { title: '北京', url: '/fishing-spot/beijing' },
+            { title: '北戴河', url: '/fishing-spot/beidaihe' },
+            { title: '石家庄', url: '/fishing-spot/shijiazhuang' },
+            { title: '长春', url: '/fishing-spot/changchun' }
           ]
         },
         { title: '装备',
+          url: '#!',
           isExpanded: false,
           children: [
-            { title: '鱼竿' },
-            { title: '鱼漂' },
-            { title: '鱼线' },
-            { title: '鱼钩' }
+            { title: '鱼竿', url: '/fishing-kit/fishing-pole' },
+            { title: '鱼漂', url: '/fishing-kit/float' },
+            { title: '鱼线', url: '/fishing-kit/fishing-line' },
+            { title: '鱼钩', url: '/fishing-kit/fishhook' }
           ]
         },
         { title: '鱼食',
+          url: '#!',
           isExpanded: false,
           children: [
-            { title: '饵料' },
-            { title: '窝料' }
+            { title: '饵料', url: '/fish-food/bait' },
+            { title: '窝料', url: '/fish-food/feed' }
           ]
         },
         { title: '决策支持',
+          url: '#!',
           isExpanded: false,
           children: [
-            { title: '历史数据分析' },
-            { title: '钓场地图' },
+            { title: '历史数据分析', url: '/decision-support/data-analysis' },
+            { title: '钓场地图', url: '/decision-support/fishing-spot-map' },
             { title: '钓鱼计划',
+              url: '#!',
               isExpanded: false,
               children: [
-                { title: '机器人推荐' },
-                { title: '团队讨论' }
+                { title: '机器人推荐', url: '/decision-support/fishing-plan/robot-recommendation' },
+                { title: '团队讨论', url: '/decision-support/fishing-plan/team-discussion' }
               ]
             },
-            { title: '选钓位' }
+            { title: '选钓位', url: '/decision-support/select-position' }
           ]
         },
-        { title: '钓鱼日志' },
-        { title: '消息中心' },
-        { title: '配置中心' },
-        { title: '布局切换' },
-        { title: '退出登录' }
+        { title: '钓鱼日志', url: '/fishing-log' },
+        { title: '消息中心', url: '/messages' },
+        { title: '配置中心', url: '/config' },
+        { title: '布局切换', url: '/toggle-layout' },
+        { title: '退出登录', url: '#!' }
       ]
     }
   },
