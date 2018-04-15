@@ -2,13 +2,13 @@
   <nav role="navigation">
     <ul>
       <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
-        <a href="#!" @click="pNav.isExpanded = !pNav.isExpanded">{{ pNav.title }}</a>
+        <a href="#!" @click="goto(pNav)">{{ pNav.title }}</a>
         <ul v-if="pNav.children">
           <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
-            <a href="#!" @click="sNav.isExpanded = !sNav.isExpanded">{{ sNav.title }}</a>
+            <a href="#!" @click="goto(sNav)">{{ sNav.title }}</a>
             <ul v-if="sNav.children">
               <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
-                <a href="#!" @click="tNav.isExpanded = !tNav.isExpanded">{{ tNav.title }}</a>
+                <a href="#!" @click="goto(tNav)">{{ tNav.title }}</a>
               </li>
             </ul>
           </li>
@@ -125,13 +125,13 @@ export default {
     }
   },
   methods: {
-    expandMenu: function () {
-      this.isExpanded = !this.isExpanded
-    },
-    logout: function () {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('signin')
-      })
+    goto: function (navItem) {
+      navItem.isExpanded = !navItem.isExpanded
+      if (navItem.title === '退出登录') {
+        firebase.auth().signOut().then(() => {
+          this.$router.replace('signin')
+        })
+      }
     }
   }
 }
