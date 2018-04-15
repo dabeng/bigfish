@@ -22,7 +22,7 @@
     position: fixed;
     font-size: 16px;
     color: #eee;
-    width: 185px;
+    width: 159px;
     border-right: 1px solid #fff;
   }
   .hasChildren:before {
@@ -59,6 +59,8 @@
   }
 </style>
 <script>
+import firebase from 'firebase'
+
 export default {
   name: 'Navbar',
   data: function () {
@@ -114,8 +116,22 @@ export default {
             { title: '选钓位' }
           ]
         },
-        { title: '钓鱼日志' }
+        { title: '钓鱼日志' },
+        { title: '消息中心' },
+        { title: '配置中心' },
+        { title: '布局切换' },
+        { title: '退出登录' }
       ]
+    }
+  },
+  methods: {
+    expandMenu: function () {
+      this.isExpanded = !this.isExpanded
+    },
+    logout: function () {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('signin')
+      })
     }
   }
 }

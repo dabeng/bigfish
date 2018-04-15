@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <Navbar/>
-    <Gallery/>
+    <ConfigList/>
   </div>
 </template>
 <style scoped>
@@ -12,13 +12,15 @@
 </style>
 <script>
 import Navbar from './Navbar.vue'
-import Gallery from './Gallery.vue'
+import TopMenu from './TopMenu.vue'
+import ConfigList from './ConfigList.vue'
 
 export default {
-  name: 'Index',
+  name: 'ConfigPage',
   components: {
     Navbar,
-    Gallery
+    ConfigList,
+    TopMenu
   },
   methods: {
   }
