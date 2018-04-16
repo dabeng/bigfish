@@ -1,6 +1,6 @@
 <template>
   <div class="fishList">
-    <p>目标鱼</p>
+    <h1>目标鱼</h1>
     <table>
       <thead>
         <th>名称</th>
@@ -18,6 +18,13 @@
   </div>
 </template>
 <style scoped>
+  .fishList table {
+    width: 100%;
+  }
+
+  .fishList table thead {
+    font-size: 16px;
+  }
 
 </style>
 <script>

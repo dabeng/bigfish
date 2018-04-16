@@ -8,15 +8,12 @@
 </template>
 <style scoped>
   .wrapper {
-    /*position: absolute;*/
     background-image: url(../../assets/background.jpg);
-/*    height: 100%;
-    width: 100%;*/
   }
   .configList {
     min-height: 800px;
-    /*width: 100%;*/
-    padding: 0 20px 20px 162px;
+    padding: 1px 20px 20px 182px;
+    color: #eee;
   }
 </style>
 <script>
