@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
-import ConfigPage from '@/components/ConfigPage/Index'
+import ConfigPage from '@/components/ConfigPage'
 import firebase from 'firebase'
 
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [{
     path: '*',
     redirect: '/index'
@@ -32,7 +33,7 @@ const router = new Router({
     path: '/config',
     name: 'ConfigPage',
     component: ConfigPage,
-    // meta: { requiresAuth: true }
+    meta: { requiresAuth: true }
   }]
 })
 
