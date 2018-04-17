@@ -3,8 +3,8 @@
   <img src="../assets/logo.jpg">
   <input type="text" placeholder="Email" v-model="email">
   <input type="password" placeholder="Password" v-model="password">
-  <button @click="login">Login</button>
-  <p>You don't have an account ? You can <router-link to="/signup">create one</router-link></p>
+  <button @click="login">登录</button>
+  <p>没有的话，注册一个<router-link to="/signup">新账户</router-link></p>
 </div>
 </template>
 <style scoped>
