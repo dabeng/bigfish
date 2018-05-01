@@ -13,7 +13,7 @@
   .configList {
     min-height: 800px;
     padding: 1px 20px 20px 182px;
-    color: #eee;
+    color: #fff;
   }
 </style>
 <script>

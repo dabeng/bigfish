@@ -21,7 +21,7 @@
   nav {
     position: fixed;
     font-size: 16px;
-    color: #eee;
+    color: #fff;
     width: 159px;
     border-right: 1px solid #fff;
   }
@@ -34,7 +34,7 @@
   a {
     display: inline-block;
     padding: 5px 10px;
-    color: #eee;
+    color: #fff;
     text-decoration: inherit;
     border: 1px solid transparent;
   }
