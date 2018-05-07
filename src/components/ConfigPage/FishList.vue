@@ -1,11 +1,6 @@
 <template>
   <div class="fishList">
     <h1>目标鱼</h1>
-    <p :class="{hidden: !inBatch}">
-      <b>批处理：</b>
-      <button>归档</button>
-      <button>删除</button>
-    </p>
     <table>
       <thead>
         <th></th>
@@ -15,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="fish of fishes" :key="fish['.key']">
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" :value="fish['.key']"></td>
           <td>{{fish.name}}</td>
           <td>{{fish.description}}</td>
           <td>
@@ -72,7 +67,6 @@ export default {
   data: function () {
     return {
       inEdit: false,
-      inBatch: false,
       newFish: {
         name: '',
         description: ''
