@@ -1,6 +1,9 @@
 <template>
   <div class="fishList">
     <h1>目标鱼</h1>
+    <p>
+      批处理：<button @click="deleteFishes">删除</button>
+    </p>
     <table>
       <thead>
         <th></th>
@@ -9,16 +12,22 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="fish of fishes" :key="fish['.key']">
-          <td><input type="checkbox" :value="fish['.key']"></td>
-          <td>{{fish.name}}</td>
-          <td>{{fish.description}}</td>
+        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == editedFish }">
+          <td><input type="checkbox" :value="fish['.key']" v-model="checkedFishes"></td>
           <td>
-            <button :class="['btn-edit', { hidden: inEdit }]">Edit</button>
-            <button :class="['btn-save', { hidden: !inEdit }]">Save</button>
+            <span class="value">{{fish.name}}</span>
+            <input type="text" class="editor" :value="fish.name">
+          </td>
+          <td>
+            <span class="value">{{fish.description}}</span>
+            <textarea class="editor" :value="fish.description"></textarea>
+          </td>
+          <td>
+            <button class="btn-edit" @click="triggerEdit(fish)">Edit</button>
+            <button class="btn-save" @click="updateFish">Save</button>
           </td>
         </tr>
-        <tr>
+        <tr class="new-row">
           <td></td>
           <td>
             <input type="text" class="editor" v-model="newFish.name">
@@ -27,7 +36,7 @@
             <textarea class="editor" v-model="newFish.description"></textarea>
           </td>
           <td>
-            <button class="btn-add" @click="addFish">Add</button>
+            <button class="btn-add" @click="creatFish">Creat</button>
           </td>
         </tr>
       </tbody>
@@ -46,9 +55,28 @@
   th, td {
     padding: 5px 10px;
   }
+  .btn-save {
+    display: none;
+  }
+
+  .in-edit .btn-save {
+    display: initial;
+  }
+
+  .in-edit .btn-edit,
+  .in-edit .value,
+  .in-edit ~ .new-row {
+    display: none;
+  }
 
   .editor {
     width: 100%;
+    display: none;
+  }
+
+  .new-row .editor,
+  .in-edit .editor {
+    display: initial;
   }
 
   textarea {
@@ -66,18 +94,33 @@ export default {
   },
   data: function () {
     return {
-      inEdit: false,
+      editedFish: null,
       newFish: {
         name: '',
         description: ''
-      }
+      },
+      checkedFishes: []
     }
   },
   methods: {
-    addFish: function () {
+    creatFish: function () {
       fishRef.push(this.newFish)
       this.newFish.name = ''
       this.newFish.description = ''
+    },
+    deleteFishes: function () {
+      let updates = {}
+      for (let fishKey of this.checkedFishes) {
+        updates[fishKey] = null
+      }
+
+      return fishRef.update(updates)
+    },
+    triggerEdit: function (fish) {
+      this.editedFish = fish
+    },
+    updateFish: function (fish) {
+
     }
   }
 }
