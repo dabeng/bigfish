@@ -12,19 +12,19 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == editedFish }">
+        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == activeFish }">
           <td><input type="checkbox" :value="fish['.key']" v-model="checkedFishes"></td>
           <td>
             <span class="value">{{fish.name}}</span>
-            <input type="text" class="editor" :value="fish.name">
+            <input type="text" class="editor" :value="fish.name" @input="saveEditedName">
           </td>
           <td>
             <span class="value">{{fish.description}}</span>
-            <textarea class="editor" :value="fish.description"></textarea>
+            <textarea class="editor" :value="fish.description" @input="saveEditedDesc"></textarea>
           </td>
           <td>
             <button class="btn-edit" @click="triggerEdit(fish)">Edit</button>
-            <button class="btn-save" @click="updateFish">Save</button>
+            <button class="btn-save" @click="updateFish(fish)">Save</button>
           </td>
         </tr>
         <tr class="new-row">
@@ -94,7 +94,8 @@ export default {
   },
   data: function () {
     return {
-      editedFish: null,
+      activeFish: null,
+      editedFish: {},
       newFish: {
         name: '',
         description: ''
@@ -117,10 +118,23 @@ export default {
       return fishRef.update(updates)
     },
     triggerEdit: function (fish) {
-      this.editedFish = fish
+      this.activeFish = fish
+    },
+    saveEditedName: function (e) {
+      this.editedFish.name = e.target.value
+    },
+    saveEditedDesc: function (e) {
+      this.editedFish.description = e.target.value
     },
     updateFish: function (fish) {
+      if (Object.keys(this.editedFish).length) {
+        const copy = {...fish}
+        delete copy['.key']
+        let updates = {}
+        updates[fish['.key']] = Object.assign(copy, this.editedFish)
 
+        return fishRef.update(updates)
+      }
     }
   }
 }
