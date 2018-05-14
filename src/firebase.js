@@ -13,3 +13,4 @@ const app = firebase.initializeApp(config)
 
 export const db = app.database()
 export const fishRef = db.ref('fish')
+export const placeRef = db.ref('place')

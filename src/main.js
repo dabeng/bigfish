@@ -6,6 +6,7 @@ import router from './router'
 import firebase from 'firebase'
 import './firebase'
 import VueFire from 'vuefire'
+import './directives/click-outside'
 Vue.use(VueFire)
 
 Vue.config.productionTip = false

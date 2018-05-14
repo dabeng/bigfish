@@ -1,6 +1,6 @@
 <template>
-  <div class="fishList">
-    <h1>目标鱼</h1>
+  <div class="fish-list">
+    <h1 class="subject">目标鱼</h1>
     <p>
       批处理：<button @click="deleteFishes">删除</button>
     </p>
@@ -12,7 +12,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == activeFish }">
+        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == activeFish }" v-click-outside="cancelEdit">
           <td><input type="checkbox" :value="fish['.key']" v-model="checkedFishes"></td>
           <td>
             <span class="value">{{fish.name}}</span>
@@ -44,11 +44,16 @@
   </div>
 </template>
 <style scoped>
-  .fishList table {
+  .subject {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .fish-list table {
     width: 100%;
   }
 
-  .fishList table thead {
+  .fish-list table thead {
     font-size: 16px;
   }
 
@@ -119,6 +124,11 @@ export default {
     },
     triggerEdit: function (fish) {
       this.activeFish = fish
+    },
+    cancelEdit: function (e) {
+      if (e.target.classList.contains('in-edit')) {
+        this.activeFish = null
+      }
     },
     saveEditedName: function (e) {
       this.editedFish.name = e.target.value

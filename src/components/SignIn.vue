@@ -11,6 +11,7 @@
 .login {
   text-align: center;
   padding: 20px;
+  color: #000;
 }
 input {
   display: block;

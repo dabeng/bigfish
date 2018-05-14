@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper">
     <Navbar/>
-    <div class="configList">
+    <div class="config-list">
       <FishList/>
+      <PlaceList/>
     </div>
   </div>
 </template>
@@ -10,7 +11,7 @@
   .wrapper {
     background-image: url(../../assets/background.jpg);
   }
-  .configList {
+  .config-list {
     min-height: 800px;
     padding: 1px 20px 20px 182px;
     color: #fff;
@@ -19,12 +20,14 @@
 <script>
 import Navbar from '../Navbar.vue'
 import FishList from './FishList.vue'
+import PlaceList from './PlaceList.vue'
 
 export default {
   name: 'ConfigPage',
   components: {
     Navbar,
-    FishList
+    FishList,
+    PlaceList
   },
   methods: {
   }
