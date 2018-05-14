@@ -1,5 +1,5 @@
 <template>
-  <div class="fish-list">
+  <div class="fish-list" v-click-outside="cancelEdit">
     <h1 class="subject">目标鱼</h1>
     <p>
       批处理：<button @click="deleteFishes">删除</button>
@@ -12,7 +12,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish == activeFish }" v-click-outside="cancelEdit">
+        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish['.key'] === activeId }">
           <td><input type="checkbox" :value="fish['.key']" v-model="checkedFishes"></td>
           <td>
             <span class="value">{{fish.name}}</span>
@@ -99,7 +99,7 @@ export default {
   },
   data: function () {
     return {
-      activeFish: null,
+      activeId: null,
       editedFish: {},
       newFish: {
         name: '',
@@ -123,12 +123,10 @@ export default {
       return fishRef.update(updates)
     },
     triggerEdit: function (fish) {
-      this.activeFish = fish
+      this.activeId = fish['.key']
     },
     cancelEdit: function (e) {
-      if (e.target.classList.contains('in-edit')) {
-        this.activeFish = null
-      }
+      this.activeId = null
     },
     saveEditedName: function (e) {
       this.editedFish.name = e.target.value
