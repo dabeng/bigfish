@@ -1,5 +1,5 @@
 <template>
-  <div class="fish-list" v-click-outside="cancelEdit">
+  <div class="fish-list" v-click-outside="{ selector: '.in-edit', func: cancelEdit }">
     <h1 class="subject">目标鱼</h1>
     <p>
       批处理：<button @click="deleteFishes">删除</button>

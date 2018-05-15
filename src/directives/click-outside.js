@@ -1,10 +1,12 @@
 import Vue from 'vue'
 
 Vue.directive('click-outside', function (el, binding, vnode) {
+  var selector = binding.value.selector
+  var func = binding.value.func
   document.body.addEventListener('click', function (event) {
-    if (el.querySelector('.in-edit')) {
-      if (!(el.querySelector('.in-edit') === event.target || el.querySelector('.in-edit').contains(event.target))) {
-        binding.value()
+    if (el.querySelector(selector)) {
+      if (!(el.querySelector(selector) === event.target || el.querySelector(selector).contains(event.target))) {
+        func()
       }
     }
   })
