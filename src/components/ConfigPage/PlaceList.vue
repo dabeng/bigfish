@@ -1,5 +1,5 @@
 <template>
-  <div class="place-list">
+  <div class="place-list" v-click-outside="{ selector: '.in-edit', func: cancelEdit }">
     <h1 class="subject">钓场</h1>
     <p>
       批处理：<button @click="deletePlaces">删除</button>
@@ -12,7 +12,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="place of places" :key="place['.key']" :class="{ 'in-edit': place == activePlace }">
+        <tr v-for="place of places" :key="place['.key']" :class="{ 'in-edit': place['.key'] == activePlaceId }">
           <td><input type="checkbox" :value="place['.key']" v-model="checkedPlaces"></td>
           <td>
             <span class="value">{{place.name}}</span>
@@ -99,7 +99,7 @@ export default {
   },
   data: function () {
     return {
-      activePlace: null,
+      activePlaceId: null,
       editedPlace: {},
       newPlace: {
         name: '',
@@ -123,7 +123,10 @@ export default {
       return placeRef.update(updates)
     },
     triggerEdit: function (place) {
-      this.activePlace = place
+      this.activePlaceId = place['.key']
+    },
+    cancelEdit: function (e) {
+      this.activePlaceId = null
     },
     saveEditedName: function (e) {
       this.editedPlace.name = e.target.value

@@ -12,7 +12,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish['.key'] === activeId }">
+        <tr v-for="fish of fishes" :key="fish['.key']" :class="{ 'in-edit': fish['.key'] === activeFishId }">
           <td><input type="checkbox" :value="fish['.key']" v-model="checkedFishes"></td>
           <td>
             <span class="value">{{fish.name}}</span>
@@ -99,7 +99,7 @@ export default {
   },
   data: function () {
     return {
-      activeId: null,
+      activeFishId: null,
       editedFish: {},
       newFish: {
         name: '',
@@ -123,10 +123,10 @@ export default {
       return fishRef.update(updates)
     },
     triggerEdit: function (fish) {
-      this.activeId = fish['.key']
+      this.activeFishId = fish['.key']
     },
     cancelEdit: function (e) {
-      this.activeId = null
+      this.activeFishId = null
     },
     saveEditedName: function (e) {
       this.editedFish.name = e.target.value
