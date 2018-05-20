@@ -1,6 +1,6 @@
 <template>
   <div class="place-list" v-click-outside="{ selector: '.in-edit', func: cancelEdit }">
-    <h1 class="subject">钓场</h1>
+    <h1 class="subject">装备</h1>
     <p>
       批处理：<button @click="deleteRows">删除</button>
     </p>
@@ -90,13 +90,14 @@
 
 </style>
 <script>
+
 import BaseList from './BaseList.js'
-import {placeRef} from '../../firebase'
+import {equipmentRef} from '../../firebase'
 
 export default {
-  name: 'PlaceList',
+  name: 'EquipmentList',
   firebase: {
-    rows: placeRef
+    rows: equipmentRef
   },
   mixins: [BaseList]
 }

@@ -4,6 +4,7 @@
     <div class="config-list">
       <FishList/>
       <PlaceList/>
+      <EquipmentList/>
     </div>
   </div>
 </template>
@@ -21,13 +22,15 @@
 import Navbar from '../Navbar.vue'
 import FishList from './FishList.vue'
 import PlaceList from './PlaceList.vue'
+import EquipmentList from './EquipmentList.vue'
 
 export default {
   name: 'ConfigPage',
   components: {
     Navbar,
     FishList,
-    PlaceList
+    PlaceList,
+    EquipmentList
   },
   methods: {
   }

@@ -1,9 +1,4 @@
 export default {
-  name: 'BaseList',
-  props: ['tableRef'],
-  firebase: {
-    rows: tableRef
-  },
   data: function () {
     return {
       activeRowId: null,
@@ -17,7 +12,7 @@ export default {
   },
   methods: {
     creatRow: function () {
-      tableRef.push(this.newRow)
+      this.$firebaseRefs.rows.push(this.newRow)
       this.newRow.name = ''
       this.newRow.description = ''
     },
@@ -27,7 +22,7 @@ export default {
         updates[rowKey] = null
       }
 
-      return tableRef.update(updates)
+      return this.$firebaseRefs.rows.update(updates)
     },
     triggerEdit: function (row) {
       this.activeRowId = row['.key']
@@ -42,15 +37,21 @@ export default {
       this.editedRow.description = e.target.value
     },
     updateRow: function (row) {
+      const _this = this
       if (Object.keys(this.editedRow).length) {
         const copy = {...row}
         delete copy['.key']
         let updates = {}
         updates[row['.key']] = Object.assign(copy, this.editedRow)
 
-        return tableRef.update(updates)
+        return this.$firebaseRefs.rows.update(updates, function (err) {
+          if (err) {
+            console.log(err)
+          } else {
+            _this.cancelEdit()
+          }
+        })
       }
     }
   }
 }
-</script>
