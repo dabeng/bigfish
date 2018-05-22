@@ -2,9 +2,9 @@
   <div class="wrapper">
     <Navbar/>
     <div class="config-list">
-      <FishList/>
-      <PlaceList/>
-      <EquipmentList/>
+      <BaseTable datasource="fish" subject="目标鱼"/>
+      <BaseTable datasource="place" subject="钓场"/>
+      <BaseTable datasource="equipment" subject="装备"/>
     </div>
   </div>
 </template>
@@ -20,19 +20,13 @@
 </style>
 <script>
 import Navbar from '../Navbar.vue'
-import FishList from './FishList.vue'
-import PlaceList from './PlaceList.vue'
-import EquipmentList from './EquipmentList.vue'
+import BaseTable from './BaseTable.vue'
 
 export default {
   name: 'ConfigPage',
   components: {
     Navbar,
-    FishList,
-    PlaceList,
-    EquipmentList
-  },
-  methods: {
+    BaseTable
   }
 }
 </script>
