@@ -15,7 +15,7 @@
       <tr v-for="row of rows" :key="row['.key']" :class="{ 'in-edit': row['.key'] == activeRowId }">
         <td><input type="checkbox" :value="row['.key']" v-model="checkedRows"></td>
         <td>
-          <span class="value">{{row.name}}</span>
+          <span class="value" ref="name">{{row.name}}</span>
           <input type="text" class="editor" :value="row.name" @input="saveEditedName">
         </td>
         <td>
@@ -23,8 +23,8 @@
           <textarea class="editor" :value="row.description" @input="saveEditedDesc"></textarea>
         </td>
         <td>
-          <button class="btn-edit" @click="triggerEdit(row)">Edit</button>
-          <button class="btn-save" @click="updateRow(row)">Save</button>
+          <button class="btn-edit" @click="triggerEdit(row, $event)">编辑</button>
+          <button class="btn-save" @click="updateRow(row)">保存</button>
         </td>
       </tr>
       <tr class="new-row">
@@ -36,7 +36,7 @@
           <textarea class="editor" v-model="newRow.description"></textarea>
         </td>
         <td>
-          <button class="btn-add" @click="creatRow">Creat</button>
+          <button class="btn-add" @click="creatRow">新建</button>
         </td>
       </tr>
     </tbody>
@@ -46,7 +46,7 @@
 <style scoped>
   .subject {
     padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #eee;
   }
 
   table {
@@ -82,6 +82,15 @@
   .new-row .editor,
   .in-edit .editor {
     display: initial;
+  }
+
+  .in-edit input,
+  .in-edit textarea,
+  .new-row input,
+  .new-row textarea {
+    border: none;
+    border-bottom: 1px #000 dashed;
+    background-color: transparent;
   }
 
   textarea {
@@ -124,8 +133,9 @@ export default {
 
       return this.$firebaseRefs.rows.update(updates)
     },
-    triggerEdit: function (row) {
+    triggerEdit: function (row, e) {
       this.activeRowId = row['.key']
+      this.$nextTick(() => e.target.parentNode.parentNode.querySelector('[type=text]').select())
     },
     cancelEdit: function (e) {
       this.activeRowId = null

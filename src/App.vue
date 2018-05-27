@@ -19,7 +19,6 @@ export default {
 body {
   font-size: 12px;
   margin: 0;
-  color: #fff;
 }
 .hidden {
   display: none!important;

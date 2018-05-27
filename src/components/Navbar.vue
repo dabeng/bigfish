@@ -21,9 +21,9 @@
   nav {
     position: fixed;
     font-size: 16px;
-    color: #fff;
+    color: #000;
     width: 159px;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #000;
   }
   .hasChildren:before {
     content: '+';
@@ -34,12 +34,12 @@
   a {
     display: inline-block;
     padding: 5px 10px;
-    color: #fff;
+    color: #000;
     text-decoration: inherit;
     border: 1px solid transparent;
   }
   a:hover, a:focus {
-    border-color: #fff;
+    border-color: #000;
   }
   .hasChildren > a:focus {
     border-color: transparent;
