@@ -7,7 +7,6 @@
 <style scoped>
   .wrapper {
     position: absolute;
-    background-image: url(../assets/background.jpg);
   }
 </style>
 <script>

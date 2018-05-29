@@ -51,6 +51,19 @@
 
   table {
     width: 100%;
+    border: 1px solid #eee;
+  }
+
+  thead th:first-child {
+    width: 20px;
+  }
+
+  thead th:nth-child(2) {
+    width: 150px;
+  }
+
+  thead th:last-child {
+    width: 50px;
   }
 
   table thead {
