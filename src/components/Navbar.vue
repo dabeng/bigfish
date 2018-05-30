@@ -1,7 +1,15 @@
 <template>
   <nav role="navigation">
     <ul>
-      <li class="expanded hasChildren">
+      <li v-for="pNav of categories" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
+        <a :href="pNav.url" @click="goto(pNav)">{{ pNav.name }}</a>
+        <ul v-if="pNav.children">
+          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
+            <a :href="sNav.url" @click="goto(sNav)">{{ sNav.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <!--<li class="expanded hasChildren">
         <a href="#!">目标鱼</a>
         <ul>
           <li v-for="fish of fishes" :key="fish.abc">
@@ -24,7 +32,7 @@
             <a href="#!" @click="goto(equipment)">{{ equipment.name }}</a>
           </li>
         </ul>
-      </li>
+      </li>-->
       <!--<li v-for="place of places" :key="place.id" class="expanded">
         <a href="#!" @click="goto(place)">{{ fish.name }}</a>
       </li>
@@ -166,10 +174,30 @@ export default {
       ]
     }
   },
+  computed: {
+    categories: function () {
+      return [{
+        name: '目标鱼',
+        url: '#!',
+        isExpanded: false,
+        children: this.fishes
+      }, {
+        name: '钓场',
+        url: '#!',
+        isExpanded: false,
+        children: this.places
+      }, {
+        name: '装备',
+        url: '#!',
+        isExpanded: false,
+        children: this.equipments
+      }]
+    }
+  },
   methods: {
     goto: function (navItem) {
       navItem.isExpanded = !navItem.isExpanded
-      if (navItem.title === '退出登录') {
+      if (navItem.name === '退出登录') {
         firebase.auth().signOut().then(() => {
           this.$router.replace('signin')
         })
