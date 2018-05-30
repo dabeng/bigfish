@@ -1,6 +1,36 @@
 <template>
   <nav role="navigation">
     <ul>
+      <li class="expanded hasChildren">
+        <a href="#!">目标鱼</a>
+        <ul>
+          <li v-for="fish of fishes" :key="fish.abc">
+            <a href="#!" @click="goto(fish)">{{ fish.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <li class="expanded hasChildren">
+        <a href="#!">钓场</a>
+        <ul>
+          <li v-for="place of places" :key="place.id">
+            <a href="#!" @click="goto(place)">{{ place.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <li class="expanded hasChildren">
+        <a href="#!">装备</a>
+        <ul>
+          <li v-for="equipment of equipments" :key="equipment.id">
+            <a href="#!" @click="goto(equipment)">{{ equipment.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <!--<li v-for="place of places" :key="place.id" class="expanded">
+        <a href="#!" @click="goto(place)">{{ fish.name }}</a>
+      </li>
+      <li v-for="equipment of equipments" :key="equipment.id" class="expanded">
+        <a href="#!" @click="goto(equipment)">{{ fish.name }}</a>
+      </li>
       <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
         <a :href="pNav.url" @click="goto(pNav)">{{ pNav.title }}</a>
         <ul v-if="pNav.children">
@@ -13,7 +43,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li>-->
     </ul>
   </nav>
 </template>
@@ -60,9 +90,15 @@
 </style>
 <script>
 import firebase from 'firebase'
+import {fishRef, placeRef, equipmentRef} from '../firebase'
 
 export default {
   name: 'Navbar',
+  firebase: {
+    fishes: fishRef,
+    places: placeRef,
+    equipments: equipmentRef
+  },
   data: function () {
     return {
       navs: [
