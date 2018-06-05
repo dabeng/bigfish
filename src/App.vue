@@ -1,22 +1,13 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <router-view class="wrapper"/>
 </template>
-
 <script>
 export default {
   name: 'App'
 }
 </script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-body {
+.wrapper {
   font-size: 12px;
   margin: 0;
 }

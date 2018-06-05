@@ -1,25 +1,22 @@
 <template>
-  <div class="wrapper">
+  <div>
     <Navbar/>
-    <Gallery/>
+    <router-view name="content" class="view"/>
   </div>
 </template>
 <style scoped>
-  .wrapper {
-    position: absolute;
+  .view {
+    min-height: 800px;
+    padding: 1px 0 20px 182px;
   }
 </style>
 <script>
 import Navbar from './Navbar.vue'
-import Gallery from './Gallery.vue'
 
 export default {
   name: 'Index',
   components: {
-    Navbar,
-    Gallery
-  },
-  methods: {
+    Navbar
   }
 }
 </script>

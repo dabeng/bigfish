@@ -1,57 +1,32 @@
 <template>
   <nav role="navigation">
     <ul>
-      <li v-for="pNav of categories" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
-        <a :href="pNav.url" @click="goto(pNav)">{{ pNav.name }}</a>
+      <li v-for="pNav of categories" :key="pNav.id" :class="{ hasChildren: pNav.children }">
+        <a v-if="!pNav.url" href="#!" @click="goto(pNav, $event)">{{ pNav.name }}</a>
+        <router-link v-else :to="pNav.url">{{ pNav.name }}</router-link>
         <ul v-if="pNav.children">
-          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
-            <a :href="sNav.url" @click="goto(sNav)">{{ sNav.name }}</a>
+          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ hasChildren: sNav.children }">
+            <a v-if="!sNav.url" href="#!" @click="goto(pNav, $event)">{{ sNav.name }}</a>
+            <router-link v-else :to="sNav.url">{{ sNav.name }}</router-link>
           </li>
         </ul>
       </li>
-      <!--<li class="expanded hasChildren">
-        <a href="#!">目标鱼</a>
-        <ul>
-          <li v-for="fish of fishes" :key="fish.abc">
-            <a href="#!" @click="goto(fish)">{{ fish.name }}</a>
-          </li>
-        </ul>
-      </li>
-      <li class="expanded hasChildren">
-        <a href="#!">钓场</a>
-        <ul>
-          <li v-for="place of places" :key="place.id">
-            <a href="#!" @click="goto(place)">{{ place.name }}</a>
-          </li>
-        </ul>
-      </li>
-      <li class="expanded hasChildren">
-        <a href="#!">装备</a>
-        <ul>
-          <li v-for="equipment of equipments" :key="equipment.id">
-            <a href="#!" @click="goto(equipment)">{{ equipment.name }}</a>
-          </li>
-        </ul>
-      </li>-->
-      <!--<li v-for="place of places" :key="place.id" class="expanded">
-        <a href="#!" @click="goto(place)">{{ fish.name }}</a>
-      </li>
-      <li v-for="equipment of equipments" :key="equipment.id" class="expanded">
-        <a href="#!" @click="goto(equipment)">{{ fish.name }}</a>
-      </li>
-      <li v-for="pNav of navs" :key="pNav.id" :class="{ expanded: pNav.isExpanded, hasChildren: pNav.children }">
-        <a :href="pNav.url" @click="goto(pNav)">{{ pNav.title }}</a>
+      <li v-for="pNav of navs" :key="pNav.id" :class="{ hasChildren: pNav.children }">
+        <a v-if="!pNav.url" href="#!" @click="goto(pNav, $event)">{{ pNav.name }}</a>
+        <router-link v-else :to="pNav.url">{{ pNav.name }}</router-link>
         <ul v-if="pNav.children">
-          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ expanded: sNav.isExpanded, hasChildren: sNav.children }">
-            <a :href="sNav.url" @click="goto(sNav)">{{ sNav.title }}</a>
+          <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ hasChildren: sNav.children }">
+            <a v-if="!sNav.url" href="#!" @click="goto(sNav, $event)">{{ sNav.name }}</a>
+            <router-link v-else :to="sNav.url">{{ sNav.name }}</router-link>
             <ul v-if="sNav.children">
-              <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ expanded: tNav.isExpanded, hasChildren: tNav.children }">
-                <a :href="tNav.url" @click="goto(tNav)">{{ tNav.title }}</a>
+              <li v-for="tNav of sNav.children" :key="tNav.id" :class="{ hasChildren: tNav.children }">
+                <a v-if="!tNav.url" href="#!" @click="goto(tNav, $event)">{{ tNav.name }}</a>
+                <router-link v-else :to="tNav.url">{{ tNav.name }}</router-link>
               </li>
             </ul>
           </li>
         </ul>
-      </li>-->
+      </li>
     </ul>
   </nav>
 </template>
@@ -77,7 +52,7 @@
     border: 1px solid transparent;
   }
   a:hover, a:focus {
-    border-color: #000;
+    background-color: #eee;
   }
   .hasChildren > a:focus {
     border-color: transparent;
@@ -110,67 +85,30 @@ export default {
   data: function () {
     return {
       navs: [
-        { title: '目标鱼',
-          url: '#!',
-          isExpanded: false,
+        { name: '鱼食',
           children: [
-            { title: '草鱼', url: '/grass-carp' },
-            { title: '鲤鱼', url: '/common-carp' },
-            { title: '鲢鳙', ur: '/silver-carp-bighead' },
-            { title: '鲫鱼', url: '/crucian-carp' },
-            { title: '青鱼', url: '/black-carp' }
+            { name: '饵料', url: '/fish-food/bait' },
+            { name: '窝料', url: '/fish-food/feed' }
           ]
         },
-        { title: '钓场',
-          url: '#!',
-          isExpanded: false,
+        { name: '决策支持',
           children: [
-            { title: '北京', url: '/fishing-spot/beijing' },
-            { title: '北戴河', url: '/fishing-spot/beidaihe' },
-            { title: '石家庄', url: '/fishing-spot/shijiazhuang' },
-            { title: '长春', url: '/fishing-spot/changchun' }
-          ]
-        },
-        { title: '装备',
-          url: '#!',
-          isExpanded: false,
-          children: [
-            { title: '鱼竿', url: '/fishing-kit/fishing-pole' },
-            { title: '鱼漂', url: '/fishing-kit/float' },
-            { title: '鱼线', url: '/fishing-kit/fishing-line' },
-            { title: '鱼钩', url: '/fishing-kit/fishhook' }
-          ]
-        },
-        { title: '鱼食',
-          url: '#!',
-          isExpanded: false,
-          children: [
-            { title: '饵料', url: '/fish-food/bait' },
-            { title: '窝料', url: '/fish-food/feed' }
-          ]
-        },
-        { title: '决策支持',
-          url: '#!',
-          isExpanded: false,
-          children: [
-            { title: '历史数据分析', url: '/decision-support/data-analysis' },
-            { title: '钓场地图', url: '/decision-support/fishing-spot-map' },
-            { title: '钓鱼计划',
-              url: '#!',
-              isExpanded: false,
+            { name: '历史数据分析', url: '/decision-support/data-analysis' },
+            { name: '钓场地图', url: '/decision-support/fishing-spot-map' },
+            { name: '钓鱼计划',
               children: [
-                { title: '机器人推荐', url: '/decision-support/fishing-plan/robot-recommendation' },
-                { title: '团队讨论', url: '/decision-support/fishing-plan/team-discussion' }
+                { name: '机器人推荐', url: '/decision-support/fishing-plan/robot-recommendation' },
+                { name: '团队讨论', url: '/decision-support/fishing-plan/team-discussion' }
               ]
             },
-            { title: '选钓位', url: '/decision-support/select-position' }
+            { name: '选钓位', url: '/decision-support/select-position' }
           ]
         },
-        { title: '钓鱼日志', url: '/fishing-log' },
-        { title: '消息中心', url: '/messages' },
-        { title: '配置中心', url: '/config' },
-        { title: '布局切换', url: '/toggle-layout' },
-        { title: '退出登录', url: '#!' }
+        { name: '钓鱼日志', url: '/fishing-log' },
+        { name: '消息中心', url: '/messages' },
+        { name: '配置中心', url: '/config' },
+        { name: '布局切换', url: '/toggle-layout' },
+        { name: '退出登录' }
       ]
     }
   },
@@ -178,25 +116,23 @@ export default {
     categories: function () {
       return [{
         name: '目标鱼',
-        url: '#!',
-        isExpanded: false,
         children: this.fishes
       }, {
         name: '钓场',
-        url: '#!',
-        isExpanded: false,
         children: this.places
       }, {
         name: '装备',
-        url: '#!',
-        isExpanded: false,
         children: this.equipments
       }]
     }
   },
   methods: {
-    goto: function (navItem) {
-      navItem.isExpanded = !navItem.isExpanded
+    goto: function (navItem, e) {
+      if (e.target.parentNode.classList.contains('expanded')) {
+        e.target.parentNode.classList.remove('expanded')
+      } else {
+        e.target.parentNode.classList.add('expanded')
+      }
       if (navItem.name === '退出登录') {
         firebase.auth().signOut().then(() => {
           this.$router.replace('signin')
