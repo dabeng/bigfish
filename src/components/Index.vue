@@ -7,7 +7,7 @@
 <style scoped>
   .view {
     min-height: 800px;
-    padding: 1px 0 20px 182px;
+    padding: 1px 20px 20px 182px;
   }
 </style>
 <script>

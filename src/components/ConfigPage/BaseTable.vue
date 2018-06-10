@@ -129,22 +129,45 @@ export default {
   },
   firebase: function () {
     return {
-      rows: db.ref(this.datasource)
+      rows: db.ref(this.datasource),
+      tags: db.ref('tag')
     }
   },
   methods: {
     creatRow: function () {
-      this.$firebaseRefs.rows.push(this.newRow)
-      this.newRow.name = ''
-      this.newRow.description = ''
+      const _this = this
+      var newRowKey = this.$firebaseRefs.rows.push().key
+      var newTagKey = this.$firebaseRefs.tags.push().key
+      var updates = {}
+      updates['/' + this.datasource + '/' + newRowKey] = this.newRow
+      updates['/tag/' + newTagKey] = { relatedKey: newRowKey, name: this.newRow.name }
+
+      db.ref().update(updates, function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          _this.newRow.name = ''
+          _this.newRow.description = ''
+        }
+      })
     },
     deleteRows: function () {
       let updates = {}
       for (let rowKey of this.checkedRows) {
-        updates[rowKey] = null
+        updates['/' + this.datasource + '/' + rowKey] = null
+        this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(rowKey).once('value', function (snap) {
+          const data = snap.val()
+          for (let tagKey in data) {
+            data[tagKey] = null
+            updates['/tag/' + tagKey] = null
+          }
+        })
       }
-
-      return this.$firebaseRefs.rows.update(updates)
+      db.ref().update(updates, function (err) {
+        if (err) {
+          console.log(err)
+        }
+      })
     },
     triggerEdit: function (row, e) {
       this.activeRowId = row['.key']

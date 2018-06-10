@@ -12,6 +12,7 @@ const config = {
 const app = firebase.initializeApp(config)
 
 export const db = app.database()
+export const tagRef = db.ref('tag')
 export const fishRef = db.ref('fish')
 export const placeRef = db.ref('place')
 export const equipmentRef = db.ref('equipment')
