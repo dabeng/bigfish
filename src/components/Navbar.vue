@@ -6,8 +6,7 @@
         <router-link v-else :to="pNav.url">{{ pNav.name }}</router-link>
         <ul v-if="pNav.children">
           <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ hasChildren: sNav.children }">
-            <a v-if="!sNav.url" href="#!" @click="goto(pNav, $event)">{{ sNav.name }}</a>
-            <router-link v-else :to="sNav.url">{{ sNav.name }}</router-link>
+            <router-link :to="{ name: 'fishpage', params: { id: sNav['.key'] }}">{{ sNav.name }}</router-link>
           </li>
         </ul>
       </li>
@@ -115,12 +114,15 @@ export default {
   computed: {
     categories: function () {
       return [{
+        category: 'fish',
         name: '目标鱼',
         children: this.fishes
       }, {
+        category: 'place',
         name: '钓场',
         children: this.places
       }, {
+        category: 'equipment',
         name: '装备',
         children: this.equipments
       }]

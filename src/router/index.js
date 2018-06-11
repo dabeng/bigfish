@@ -4,6 +4,7 @@ import Index from '@/components/Index'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
 import Gallery from '@/components/Gallery'
+import FishPage from '@/components/FishPage'
 import ConfigPage from '@/components/ConfigPage/Index'
 import firebase from 'firebase'
 
@@ -34,6 +35,17 @@ const router = new Router({
           path: '',
           name: 'Gallery',
           components: { content: Gallery }
+        }
+      ]
+    }, {
+      path: '/fish/:id',
+      component: Index,
+      children: [
+        {
+          path: '',
+          name: 'fishpage',
+          components: { content: FishPage },
+          props: { content: true }
         }
       ]
     }, {
