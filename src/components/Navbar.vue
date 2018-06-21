@@ -6,7 +6,7 @@
         <router-link v-else :to="pNav.url">{{ pNav.name }}</router-link>
         <ul v-if="pNav.children">
           <li v-for="sNav of pNav.children" :key="sNav.id" :class="{ hasChildren: sNav.children }">
-            <router-link :to="{ name: 'fishpage', params: { id: sNav['.key'] }}">{{ sNav.name }}</router-link>
+            <router-link :to="{ name: 'fish', params: { id: sNav['.key'] }}">{{ sNav.name }}</router-link>
           </li>
         </ul>
       </li>
