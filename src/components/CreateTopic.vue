@@ -1,9 +1,9 @@
 <template>
   <section class="create-topic">
-    <header>畅所欲言</header>
-    <input type="text" class="editor topic-title" placeholder="话题" v-model="title">
-    <textarea class="editor topic-content" placeholder="详述" v-model="cotent"></textarea>
-    <footer><button id="btn-submit">提交</button></footer>
+    <header>发言</header>
+    <input type="text" class="editor topic-title" placeholder="话题" v-model="newTopic.title">
+    <textarea class="editor topic-content" placeholder="详述" v-model="newTopic.content"></textarea>
+    <footer><button id="btn-submit" @click="createTopic(newTopic)">提交</button></footer>
   </section>
 </template>
 <style>
@@ -32,19 +32,48 @@ footer {
 }
 </style>
 <script>
-import {topicRef} from '../firebase'
+import {db, topicRef, tagRef} from '../firebase'
 
 export default {
   name: 'BaseTable',
+  props: ['tag'],
   firebase: function () {
     return {
-      topics: topicRef
+      topics: topicRef,
+      tags: tagRef
     }
   },
   data: function () {
     return {
-      title: '',
-      cotent: ''
+      newTopic: {
+        title: '',
+        content: ''
+      }
+    }
+  },
+  methods: {
+    createTopic: function () {
+      const _this = this
+      var newTopicKey = this.$firebaseRefs.topics.push().key
+
+      this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(this.tag).once('value', function (snap) {
+        const data = snap.val()
+        for (let tagKey in data) {
+          _this.newTopic.tags = [tagKey]
+        }
+      })
+
+      var updates = {}
+      updates['/topic/' + newTopicKey] = this.newTopic
+
+      db.ref().update(updates, function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          _this.newTopic.title = ''
+          _this.newTopic.content = ''
+        }
+      })
     }
   }
 }

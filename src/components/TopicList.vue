@@ -1,12 +1,12 @@
 <template>
 <div class="topic-list">
   <p>
-    批处理：<button @click="deleteRows">删除</button>
+    批处理：<button @click="deleteTopics">删除</button>
   </p>
   <table>
     <thead>
       <th></th>
-      <th>主题</th>
+      <th>话题</th>
       <th>评论</th>
     </thead>
     <tbody>
@@ -51,6 +51,7 @@ import {db} from '../firebase'
 
 export default {
   name: 'TopicList',
+  props: ['datasource', 'tag'],
   data: function () {
     return {
       checkedTopics: []
@@ -62,7 +63,7 @@ export default {
     }
   },
   methods: {
-    deleteRows: function () {
+    deleteTopics: function () {
       let updates = {}
       for (let topicKey of this.checkedTopics) {
         updates['/' + this.datasource + '/' + topicKey] = null

@@ -2,8 +2,8 @@
 <div class="fish-define">
   <h1 class="subject">{{subject.name}}</h1>
   <p class="description">{{subject.description}}</p>
-  <TopicList/>
-  <CreateTopic/>
+  <TopicList datasource="topic" v-bind:tag="this.id"/>
+  <CreateTopic v-bind:tag="this.id"/>
 </div>
 </template>
 <style scoped>
