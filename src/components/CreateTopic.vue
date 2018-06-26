@@ -55,26 +55,25 @@ export default {
   methods: {
     createTopic: function () {
       const _this = this
-      var newTopicKey = this.$firebaseRefs.topics.push().key
 
-      let tagKey
-      this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(this.tag).once('value', function (snap) {
-        const data = snap.val()
-        tagKey = data.key()
-      })
-
-      var updates = {}
-      updates['/topic/' + newTopicKey] = this.newTopic
-      updates['/tagTopic/' + tagKey] = { newTopicKey: true }
-
-      db.ref().update(updates, function (err) {
-        if (err) {
+      this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(this.tag).once('value')
+        .then(function (snap) {
+          return Object.keys(snap.val())[0]
+        })
+        .then(function (tagKey) {
+          var updates = {}
+          var newTopicKey = _this.$firebaseRefs.topics.push().key
+          updates['/topic/' + newTopicKey] = _this.newTopic
+          updates['/tagTopic/' + tagKey + '/' + newTopicKey] = true
+          return db.ref().update(updates)
+        })
+        .catch(function (err) {
           console.log(err)
-        } else {
+        })
+        .finally(function () {
           _this.newTopic.title = ''
           _this.newTopic.content = ''
-        }
-      })
+        })
     }
   }
 }
