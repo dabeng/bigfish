@@ -32,7 +32,7 @@ footer {
 }
 </style>
 <script>
-import {db, topicRef, tagRef} from '../firebase'
+import {db, topicRef, tagRef, tagTopicRef} from '../firebase'
 
 export default {
   name: 'BaseTable',
@@ -40,7 +40,8 @@ export default {
   firebase: function () {
     return {
       topics: topicRef,
-      tags: tagRef
+      tags: tagRef,
+      tagTopics: tagTopicRef
     }
   },
   data: function () {
@@ -56,15 +57,15 @@ export default {
       const _this = this
       var newTopicKey = this.$firebaseRefs.topics.push().key
 
+      let tagKey
       this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(this.tag).once('value', function (snap) {
         const data = snap.val()
-        for (let tagKey in data) {
-          _this.newTopic.tags = [tagKey]
-        }
+        tagKey = data.key()
       })
 
       var updates = {}
       updates['/topic/' + newTopicKey] = this.newTopic
+      updates['/tagTopic/' + tagKey] = { newTopicKey: true }
 
       db.ref().update(updates, function (err) {
         if (err) {
