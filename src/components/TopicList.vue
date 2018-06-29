@@ -89,20 +89,21 @@ export default {
     }
   },
   watch: {
-    tag: function (val) {
-      const _this = this
-      db.ref('tag').orderByChild('relatedKey').equalTo(val).once('value')
-        .then(function (snap) {
-          db.ref('tagTopic').child(Object.keys(snap.val())[0]).once('value')
-            .then(snap => {
-              Promise.all(Object.keys(snap.val()).map(id => _this.fetch(id)))
-                .then(t => {
-                  _this.taggedTopics = t
-                  _this.isLoading = false
-                })
-                .catch(err => console.log(err))
-            })
-        })
+    tag: async function (val) {
+      try {
+        const _this = this
+        const tagId = await db.ref('tag').orderByChild('relatedKey').equalTo(val).once('value')
+          .then(snap => Object.keys(snap.val())[0])
+        const topicIds = await db.ref('tagTopic').child(tagId).once('value')
+          .then(snap => Object.keys(snap.val()))
+        const taggedTopics = await Promise.all(topicIds.map(id => _this.fetch(id)))
+          .then(t => t)
+
+        this.taggedTopics = taggedTopics
+        this.isLoading = false
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }
