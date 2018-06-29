@@ -1,6 +1,5 @@
 <template>
 <div class="topic-list">
-  <h1>{{test.name}}</h1>
   <p>
     批处理：<button @click="deleteTopics">删除</button>
   </p>
@@ -11,11 +10,14 @@
       <th>评论</th>
     </thead>
     <tbody>
-      <tr v-if="isLoading">
+      <tr v-if="load === 'loading'">
         <span>...</span>
       </tr>
-      <tr v-else v-for="topic of taggedTopics" :key="topic['.key']">
-        <td><input type="checkbox" :value="topic['.key']" v-model="checkedTopics"></td>
+      <tr v-else-if="load === 'empty'">
+        <span>There is no data for the time being</span>
+      </tr>
+      <tr v-else v-for="topic of taggedTopics" :key="topic.key">
+        <td><input type="checkbox" :value="topic.key" v-model="checkedTopics"></td>
         <td>
           <span class="topic">{{topic.title}}</span>
         </td>
@@ -32,6 +34,10 @@
   table {
     width: 100%;
     border: 1px solid #eee;
+  }
+
+  thead th {
+    text-align: left;
   }
 
   thead th:first-child {
@@ -51,59 +57,76 @@
   }
 </style>
 <script>
-import {db} from '../firebase'
+import {SysError} from '../utils'
+import {db, tagRef, topicRef, tagTopicRef} from '../firebase'
 
 export default {
   name: 'TopicList',
-  props: ['datasource', 'tag'],
+  props: ['tag'],
   data: function () {
     return {
       checkedTopics: [],
       taggedTopics: [],
-      isLoading: true
+      load: 'loading',
+      tagId: ''
     }
   },
-  firebase: function () {
-    return {
-      topics: db.ref(this.datasource),
-      test: db.ref('tag').child('-LEdqCX6ev8HrMh9LWHS')
+  watch: {
+    tag: {
+      handler: function (val, oldVal) {
+        this.fetchTopics(val)
+      },
+      immediate: true
     }
   },
   methods: {
-    fetch: function (id) {
-      return db.ref('topic').child(id).once('value')
-        .then(snap => {
-          return snap.val()
-        })
+    fetchTopics: async function (relatedSubjectId) {
+      try {
+        const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
+          .then(snap => {
+            if (!snap.val()) {
+              throw new SysError('There is no data for the time being')
+            }
+            return Object.keys(snap.val())[0]
+          })
+        const topicIds = await tagTopicRef.child(tagId).once('value')
+          .then(snap => {
+            if (!snap.val()) {
+              throw new SysError('There is no data for the time being')
+            }
+            return Object.keys(snap.val())
+          })
+        const taggedTopics = await Promise.all(topicIds.map(id => topicRef.child(id).once('value').then(snap => snap)))
+          .then(topics => {
+            if (!topics.length) {
+              throw new SysError('There is no data for the time being')
+            }
+            return topics
+          })
+
+        this.taggedTopics = taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))
+        this.load = 'loaded'
+        this.checkedTopics = []
+        this.tagId = tagId
+      } catch (err) {
+        if (err instanceof SysError) {
+          console.log('System Error: ' + err.message)
+        } else {
+          console.log(err)
+        }
+      }
     },
     deleteTopics: function () {
       let updates = {}
       for (let topicKey of this.checkedTopics) {
-        updates['/' + this.datasource + '/' + topicKey] = null
+        updates['/topic/' + topicKey] = null
+        updates['/tag/' + this.tagId + '/' + topicKey] = null
       }
       db.ref().update(updates, function (err) {
         if (err) {
           console.log(err)
         }
       })
-    }
-  },
-  watch: {
-    tag: async function (val) {
-      try {
-        const _this = this
-        const tagId = await db.ref('tag').orderByChild('relatedKey').equalTo(val).once('value')
-          .then(snap => Object.keys(snap.val())[0])
-        const topicIds = await db.ref('tagTopic').child(tagId).once('value')
-          .then(snap => Object.keys(snap.val()))
-        const taggedTopics = await Promise.all(topicIds.map(id => _this.fetch(id)))
-          .then(t => t)
-
-        this.taggedTopics = taggedTopics
-        this.isLoading = false
-      } catch (err) {
-        console.error(err)
-      }
     }
   }
 }
