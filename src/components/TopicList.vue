@@ -11,10 +11,10 @@
     </thead>
     <tbody>
       <tr v-if="load === 'loading'">
-        <span>...</span>
+        <td colspan="3">...</td>
       </tr>
       <tr v-else-if="load === 'empty'">
-        <span>There is no data for the time being</span>
+        <td colspan="3">There is no data for the time being</td>
       </tr>
       <tr v-else v-for="topic of taggedTopics" :key="topic.key">
         <td><input type="checkbox" :value="topic.key" v-model="checkedTopics"></td>
@@ -75,46 +75,49 @@ export default {
     tag: {
       handler: function (val, oldVal) {
         this.fetchTopics(val)
+          .then(({tagId, taggedTopics}) => {
+            this.taggedTopics = taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))
+            this.load = 'loaded'
+            this.checkedTopics = []
+            this.tagId = tagId
+          })
+          .catch((err) => {
+            if (err instanceof SysError) {
+              this.load = 'empty'
+              console.log('System Error: ' + err.message)
+            } else {
+              console.log(err)
+            }
+          })
       },
       immediate: true
     }
   },
   methods: {
     fetchTopics: async function (relatedSubjectId) {
-      try {
-        const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
-          .then(snap => {
-            if (!snap.val()) {
-              throw new SysError('There is no data for the time being')
-            }
-            return Object.keys(snap.val())[0]
-          })
-        const topicIds = await tagTopicRef.child(tagId).once('value')
-          .then(snap => {
-            if (!snap.val()) {
-              throw new SysError('There is no data for the time being')
-            }
-            return Object.keys(snap.val())
-          })
-        const taggedTopics = await Promise.all(topicIds.map(id => topicRef.child(id).once('value').then(snap => snap)))
-          .then(topics => {
-            if (!topics.length) {
-              throw new SysError('There is no data for the time being')
-            }
-            return topics
-          })
+      const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
+        .then(snap => {
+          if (!snap.val()) {
+            throw new SysError('There is no tag data')
+          }
+          return Object.keys(snap.val())[0]
+        })
+      const topicIds = await tagTopicRef.child(tagId).once('value')
+        .then(snap => {
+          if (!snap.val()) {
+            throw new SysError('There is no tagTopic data')
+          }
+          return Object.keys(snap.val())
+        })
+      const taggedTopics = await Promise.all(topicIds.map(id => topicRef.child(id).once('value').then(snap => snap)))
+        .then(topics => {
+          if (!topics.length) {
+            throw new SysError('There is no topic data with associated tag')
+          }
+          return topics
+        })
 
-        this.taggedTopics = taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))
-        this.load = 'loaded'
-        this.checkedTopics = []
-        this.tagId = tagId
-      } catch (err) {
-        if (err instanceof SysError) {
-          console.log('System Error: ' + err.message)
-        } else {
-          console.log(err)
-        }
-      }
+      return {tagId, taggedTopics}
     },
     deleteTopics: function () {
       let updates = {}
