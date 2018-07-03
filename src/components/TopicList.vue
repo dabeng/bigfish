@@ -121,9 +121,9 @@ export default {
     },
     deleteTopics: function () {
       let updates = {}
-      for (let topicKey of this.checkedTopics) {
-        updates['/topic/' + topicKey] = null
-        updates['/tag/' + this.tagId + '/' + topicKey] = null
+      for (let topicId of this.checkedTopics) {
+        updates['/topic/' + topicId] = null
+        updates['/tagTopic/' + this.tagId + '/' + topicId] = null
       }
       db.ref().update(updates, function (err) {
         if (err) {
