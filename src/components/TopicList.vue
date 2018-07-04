@@ -94,6 +94,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'getTaggedTopics'
+    ]),
     fetchTopics: async function (relatedSubjectId) {
       const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
         .then(snap => {

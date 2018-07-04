@@ -6,22 +6,13 @@ import router from './router'
 import firebase from 'firebase'
 import './firebase'
 import VueFire from 'vuefire'
+import store from './store'
 import './directives/click-outside'
 Vue.use(VueFire)
 
 Vue.config.productionTip = false
 
 let app
-// const config = {
-//   apiKey: 'AIzaSyA3yA8WnP4iMVspXqA83XWsOPtQ4NMPjpw',
-//   authDomain: 'bigfish-f0a80.firebaseapp.com',
-//   databaseURL: 'https://bigfish-f0a80.firebaseio.com',
-//   projectId: 'bigfish-f0a80',
-//   storageBucket: 'bigfish-f0a80.appspot.com',
-//   messagingSenderId: '279103206853'
-// }
-
-// firebase.initializeApp(config)
 /*
  * Placing vue app initialization code snippets in onAuthStateChanged can let
  * firebase.auth().currentUser return real user's sign-in status
@@ -33,7 +24,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       el: '#app',
       template: '<App/>',
       components: { App },
-      router
+      router,
+      store
     })
   }
 })
