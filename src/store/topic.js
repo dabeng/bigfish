@@ -1,4 +1,4 @@
-import topic from '../../api/topic'
+import topic from '../api/topic'
 
 export default {
   namespaced: true,
@@ -11,9 +11,9 @@ export default {
     }
   },
   actions: {
-    getTaggedTopics ({ commit }) {
-      topic.getTaggedTopics(topics => {
-        commit('setTaggedTopics', topics)
+    getTaggedTopics ({ commit }, tagId) {
+      topic.getTaggedTopics(tagId).then(({taggedTopics}) => {
+        commit('setTaggedTopics', taggedTopics)
       })
     }
   }

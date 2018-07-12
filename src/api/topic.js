@@ -1,16 +1,7 @@
-/**
- * Mocking client-server processing
- */
-const _products = [
-  {"id": 1, "title": "iPad 4 Mini", "price": 500.01, "inventory": 2},
-  {"id": 2, "title": "H&M T-Shirt White", "price": 10.99, "inventory": 10},
-  {"id": 3, "title": "Charli XCX - Sucker CD", "price": 19.99, "inventory": 5}
-]
+import {SysError} from '../utils'
+import {tagRef, topicRef, tagTopicRef} from '../firebase'
 
 export default {
-  getProducts (cb) {
-    setTimeout(() => cb(_products), 100)
-  },
   async getTaggedTopics (relatedSubjectId) {
     const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
       .then(snap => {
@@ -34,6 +25,6 @@ export default {
         return topics
       })
 
-    return {tagId, taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))}
+    return {taggedTopics: taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))}
   }
 }
