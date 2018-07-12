@@ -93,6 +93,14 @@ export default {
   computed: mapState('topic', [
     'taggedTopics'
   ]),
+  watch: {
+    tag: {
+      handler: function (val, oldVal) {
+        this.getTaggedTopics(val)
+      },
+      immediate: true
+    }
+  },
   methods: {
     ...mapActions('topic', [
       'getTaggedTopics'
@@ -134,9 +142,9 @@ export default {
     //     }
     //   })
     // }
-  },
-  created () {
-    this.getTaggedTopics(this.tag)
   }
+  // created () {
+  //   this.getTaggedTopics(this.tag)
+  // }
 }
 </script>
