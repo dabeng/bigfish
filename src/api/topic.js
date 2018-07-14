@@ -1,15 +1,17 @@
 import {SysError} from '../utils'
-import {tagRef, topicRef, tagTopicRef} from '../firebase'
+import {db, tagRef, topicRef, tagTopicRef} from '../firebase'
 
 export default {
-  async getTaggedTopics (relatedSubjectId) {
-    const tagId = await tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
+  getTagId (relatedSubjectId) {
+    return tagRef.orderByChild('relatedKey').equalTo(relatedSubjectId).once('value')
       .then(snap => {
         if (!snap.val()) {
           throw new SysError('There is no tag data')
         }
         return Object.keys(snap.val())[0]
       })
+  },
+  async getTaggedTopics (tagId) {
     const topicIds = await tagTopicRef.child(tagId).once('value')
       .then(snap => {
         if (!snap.val()) {
@@ -24,7 +26,23 @@ export default {
         }
         return topics
       })
-
-    return {taggedTopics: taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))}
+    return taggedTopics.map(topic => Object.assign(topic.val(), { key: topic.key }))
+  },
+  createTaggedTopic (tagId, newTopic) {
+    var updates = {}
+    var newTopicKey = topicRef.push().key
+    updates['/topic/' + newTopicKey] = newTopic
+    updates['/tagTopic/' + tagId + '/' + newTopicKey] = true
+    return db.ref().update(updates).then(() => {
+      return newTopicKey
+    })
+  },
+  deleteTaggedTopics (tagId, topicKeys) {
+    let updates = {}
+    for (let topicId of topicKeys) {
+      updates['/topic/' + topicId] = null
+      updates['/tagTopic/' + tagId + '/' + topicId] = null
+    }
+    return db.ref().update(updates)
   }
 }
