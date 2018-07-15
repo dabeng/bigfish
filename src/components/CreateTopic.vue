@@ -3,7 +3,7 @@
     <header>发言</header>
     <input type="text" class="editor topic-title" placeholder="话题" v-model="newTopic.title">
     <textarea class="editor topic-content" placeholder="详述" v-model="newTopic.content"></textarea>
-    <footer><button id="btn-submit" @click="createTopic(newTopic)">提交</button></footer>
+    <footer><button id="btn-submit" @click="createTopic()">提交</button></footer>
   </section>
 </template>
 <style>
@@ -32,18 +32,11 @@ footer {
 }
 </style>
 <script>
-import {db, topicRef, tagRef, tagTopicRef} from '../firebase'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'BaseTable',
   props: ['tag'],
-  firebase: function () {
-    return {
-      topics: topicRef,
-      tags: tagRef,
-      tagTopics: tagTopicRef
-    }
-  },
   data: function () {
     return {
       newTopic: {
@@ -52,21 +45,16 @@ export default {
       }
     }
   },
+  computed: mapState('topic', [
+    'taggedTopics'
+  ]),
   methods: {
+    ...mapActions('topic', [
+      'createTaggedTopic'
+    ]),
     createTopic: function () {
       const _this = this
-
-      this.$firebaseRefs.tags.orderByChild('relatedKey').equalTo(this.tag).once('value')
-        .then(function (snap) {
-          return Object.keys(snap.val())[0]
-        })
-        .then(function (tagKey) {
-          var updates = {}
-          var newTopicKey = _this.$firebaseRefs.topics.push().key
-          updates['/topic/' + newTopicKey] = _this.newTopic
-          updates['/tagTopic/' + tagKey + '/' + newTopicKey] = true
-          return db.ref().update(updates)
-        })
+      this.createTaggedTopic({...this.newTopic})
         .catch(function (err) {
           console.log(err)
         })
