@@ -49,6 +49,17 @@ const router = new Router({
         }
       ]
     }, {
+      path: '/topic/:id',
+      component: Index,
+      children: [
+        {
+          path: '',
+          name: 'topic',
+          components: { content: TopicPage },
+          props: { content: true }
+        }
+      ]
+    }, {
       path: '/config',
       component: Index,
       children: [
