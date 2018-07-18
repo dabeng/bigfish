@@ -44,5 +44,9 @@ export default {
       updates['/tagTopic/' + tagId + '/' + topicId] = null
     }
     return db.ref().update(updates)
+  },
+  getTopicById (topicId) {
+    return topicRef.orderByKey().equalTo(topicId).once('value')
+      .then(snap => snap.val()[topicId])
   }
 }

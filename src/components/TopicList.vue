@@ -19,7 +19,7 @@
       <tr v-else v-for="(topic, index) of taggedTopics" :key="topic.key">
         <td><input type="checkbox" :value="{key: topic.key, index}" v-model="checkedTopics"></td>
         <td>
-          <span class="topic">{{topic.title}}</span>
+          <router-link :to="{ name: 'topic', params: { id: topic.key }}">{{ topic.title }}</router-link>
         </td>
         <td>
           <span class="comments-number">123</span>

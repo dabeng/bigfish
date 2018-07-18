@@ -5,6 +5,7 @@ import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
 import Gallery from '@/components/Gallery'
 import SubjectPage from '@/components/SubjectPage'
+import TopicPage from '@/components/TopicPage'
 import ConfigPage from '@/components/ConfigPage/Index'
 import firebase from 'firebase'
 

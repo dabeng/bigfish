@@ -5,7 +5,8 @@ export default {
   namespaced: true,
   state: {
     tagId: '',
-    taggedTopics: undefined
+    taggedTopics: undefined,
+    currentTopic: {}
   },
   getters: {
     topicCount: state => {
@@ -26,6 +27,9 @@ export default {
       for (var i = indexes.length - 1; i >= 0; i--) {
         state.taggedTopics.splice(indexes[i], 1)
       }
+    },
+    setTopic (state, topic) {
+      state.currentTopic = topic
     }
   },
   actions: {
@@ -61,6 +65,12 @@ export default {
       topicIntf.deleteTaggedTopics(state.tagId, keyArr).then(() => {
         commit('deleteTaggedTopics', indexArr)
       })
+    },
+    getCurrentTopic ({ commit }, topicId) {
+      topicIntf.getTopicById(topicId)
+        .then(topic => {
+          commit('setTopic', topic)
+        })
     }
   }
 }
