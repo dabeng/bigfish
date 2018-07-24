@@ -59,6 +59,12 @@ export default {
         commit('addItem2TaggedTopics', {...topic, key: newTopicId})
       })
     },
+    updateTopic ({ commit }, [ topicId, topic ]) {
+      topicIntf.updateTopic(topicId, topic)
+        .then(() => {
+          commit('setTopic', topic)
+        })
+    },
     deleteTaggedTopics ({ state, commit }, topics) {
       const indexArr = topics.map(ele => ele.index)
       const keyArr = topics.map(ele => ele.key)

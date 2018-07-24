@@ -37,6 +37,13 @@ export default {
       return newTopicKey
     })
   },
+  updateTopic (topicId, updatedTopic) {
+    var updates = {}
+    updates['/topic/' + topicId] = updatedTopic
+    console.log(topicId)
+    console.log(updatedTopic)
+    return db.ref().update(updates)
+  },
   deleteTaggedTopics (tagId, topicKeys) {
     let updates = {}
     for (let topicId of topicKeys) {

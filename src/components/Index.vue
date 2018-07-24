@@ -1,11 +1,11 @@
 <template>
   <div>
     <Navbar/>
-    <router-view name="content" class="view"/>
+    <router-view name="content" class="main-content"/>
   </div>
 </template>
 <style scoped>
-  .view {
+  .main-content {
     min-height: 800px;
     padding: 1px 20px 20px 182px;
   }
