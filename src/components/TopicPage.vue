@@ -3,8 +3,8 @@
   <div :class="['topic-editor', { view: viewState }]">
     <h1 class="title field-value">{{currentTopic.title}}</h1>
     <p class="content field-value">{{currentTopic.content}}</p>
-    <input class="field-editor field-heading" :placeholder="currentTopic.title" v-model="updatedTopic.title">
-    <textarea class="field-editor field-content" :placeholder="currentTopic.content" v-model="updatedTopic.content"></textarea>
+    <input class="field-editor field-heading" v-model="updatedTopic.title">
+    <textarea class="field-editor field-content" v-model="updatedTopic.content"></textarea>
     <div class="btn-group">
       <button class="btn-edit" @click="triggerEdit">编辑</button>
       <button class="btn-save" @click="saveEdit">保存</button>
@@ -80,6 +80,7 @@ export default {
       'updateTopic'
     ]),
     triggerEdit: function () {
+      this.updatedTopic = {...this.currentTopic}
       this.viewState = false
     },
     cancelEdit: function () {
@@ -88,6 +89,9 @@ export default {
     saveEdit: function () {
       const _this = this
       this.updateTopic([this.id, {...this.updatedTopic}])
+        .then(function () {
+          _this.viewState = true
+        })
         .catch(function (err) {
           console.log(err)
         })
