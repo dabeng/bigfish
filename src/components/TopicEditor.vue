@@ -2,9 +2,9 @@
 <div :class="['topic-editor', { view: viewState }]">
   <h1 class="title field-value">{{currentTopic.title}}</h1>
   <p class="content field-value">{{currentTopic.content}}</p>
-  <input class="field-editor field-heading" v-model="updatedTopic.title">
+  <input class="field-editor field-title" v-model="updatedTopic.title">
   <textarea class="field-editor field-content" v-model="updatedTopic.content"></textarea>
-  <div class="btn-group" v-if="currentTopic.title !== ''">
+  <div class="btn-group" v-if="currentTopic.title !== undefined">
     <button class="btn-edit" @click="triggerEdit">编辑</button>
     <button class="btn-save" @click="saveEdit">保存</button>
     <button class="btn-cancel" @click="cancelEdit">取消</button>
@@ -12,6 +12,11 @@
 </div>
 </template>
 <style scoped>
+.field-editor {
+  border: none;
+  border-bottom: 1px #000 dashed;
+  background-color: transparent;
+}
 .topic-editor.view .field-editor,
 .topic-editor.view .btn-save,
 .topic-editor.view .btn-cancel,
@@ -32,10 +37,11 @@
   width: 100%;
   margin-top: 20px;
 }
-.field-heading {
+.field-title {
   font-size: 2em;
   padding: 10px 20px;
   box-sizing: border-box;
+  background-color: #eee;
 }
 .field-content {
   resize: vertical;

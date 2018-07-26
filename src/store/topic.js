@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: {
     tagId: '',
-    taggedTopics: undefined,
+    taggedTopics: [],
     currentTopic: {}
   },
   getters: {
