@@ -1,8 +1,8 @@
 <template>
 <div>
   <TopicEditor :id="this.id"/>
-  <!--   <CommentList v-bind:tag="this.id"/>
-    <CreateComment v-bind:tag="this.id"/> -->
+  <CommentList :topicId="this.id"/>
+  <CommentEditor :topicId="this.id"/>
 </div>
 </template>
 <style scoped>
@@ -10,16 +10,16 @@
 <script>
 import { mapActions } from 'vuex'
 import TopicEditor from './TopicEditor.vue'
-// import CommentList from './CommentList.vue'
-// import CreateComment from './CreateComment.vue'
+import CommentList from './CommentList.vue'
+import CommentEditor from './CommentEditor.vue'
 
 export default {
   name: 'TopicPage',
   props: ['id'],
   components: {
-    TopicEditor
-    // CommentList,
-    // CreateComment
+    TopicEditor,
+    CommentList,
+    CommentEditor
   },
   methods: {
     ...mapActions('topic', [
