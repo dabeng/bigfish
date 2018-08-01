@@ -1,6 +1,8 @@
 # bigfish
 
-> A Vue.js project
+巨物站点的主要目的有两个：
+1. 基于Vuejs和Firebase构建重客户端应用，体验与梳理Vuejs框架的最佳实践
+2. 终于有机会为自己打造一件称手的应用
 
 ## Build Setup
 
