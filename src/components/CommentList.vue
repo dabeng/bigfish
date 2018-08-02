@@ -4,10 +4,10 @@
     批处理：<button @click="deleteComments([topicId, checkedComments])">删除</button>
   </p>
   <article class="comment-item" v-if="commentCount === -1">
-    <p><div class="spinner"></div></p>
+    <header><div class="spinner"></div></header>
   </article>
   <article class="comment-item" v-else-if="commentCount === 0">
-    <p>There is no data for the time being</p>
+    <header>There is no data for the time being</header>
   </article>
   <article class="comment-item" v-else v-for="(comment, index) of comments" :key="comment.key">
     <header>
