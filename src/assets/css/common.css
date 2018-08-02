@@ -1,0 +1,10 @@
+.editor {
+  width: 100%;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+textarea.editor {
+  resize: vertical;
+  min-height: 56px;
+}
