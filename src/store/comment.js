@@ -32,7 +32,7 @@ export default {
     // }
   },
   actions: {
-    async getComments ({ dispatch, commit, state }, topicId) {
+    getComments ({ dispatch, commit, state }, topicId) {
       return commentIntf.getComments(topicId)
         .then(comments => {
           commit('setComments', comments)

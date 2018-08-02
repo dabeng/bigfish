@@ -21,7 +21,6 @@ footer {
   text-align: right;
 }
 .comment-editor {
-  margin-top: 20px;
   padding: 10px;
   border: 1px solid #eee;
 }
