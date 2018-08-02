@@ -1,29 +1,29 @@
 <template>
   <div class="gallery">
     <div class="column">
-      <img src="../assets/20150903_061401.jpg">
-      <img src="../assets/20170803_161928.jpg">
+      <img src="'assets/20150903_061401.jpg'">
+      <img src="'assets/20170803_161928.jpg'">
     </div>
     <div class="column">
-      <img src="../assets/20150912_110500.jpg">
+      <img src="'assets/20150912_110500.jpg'">
     </div>
     <div class="column">
-      <img src="../assets/20160625_063734.jpg">
-      <img src="../assets/20160625_073616.jpg">
-      <img src="../assets/20160702_074649.jpg">
+      <img src="'assets/20160625_063734.jpg'">
+      <img src="'/assets/20160625_073616.jpg'">
+      <img src="'/assets/20160702_074649.jpg'">
     </div>
     <div class="column">
-      <img src="../assets/20160826_153520.jpg">
-      <img src="../assets/20160827_052823.jpg">
-      <img src="../assets/20160909_173959.jpg">
+      <img src="'assets/20160826_153520.jpg'">
+      <img src="'assets/20160827_052823.jpg'">
+      <img src="'assets/20160909_173959.jpg'">
     </div>
     <div class="column">
-      <img src="../assets/20160910_061354.jpg">
+      <img src="'assets/20160910_061354.jpg'">
     </div>
     <div class="column">
-      <img src="../assets/20170719_142248.jpg">
-      <img src="../assets/20170729_052006.jpg">
-      <img src="../assets/20170803_151740.jpg">
+      <img src="'assets/20170719_142248.jpg'">
+      <img src="'assets/20170729_052006.jpg'">
+      <img src="'assets/20170803_151740.jpg'">
     </div>
   </div>
 </template>
