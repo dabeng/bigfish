@@ -13,6 +13,12 @@
     <header>
       <input type="checkbox" :value="{key: comment.key, index}" v-model="checkedComments">
       avatar + date + icon
+      <details class="menu-edit">
+        <summary><font-awesome-icon icon="ellipsis-h" /></summary>
+        <button class="btn-interact edit-cmnt"><font-awesome-icon icon="pencil-alt" /></button>
+        <button class="btn-interact thumbs-up"><font-awesome-icon icon="thumbs-up" /></button>
+        <button class="btn-interact thumbs-down"><font-awesome-icon icon="thumbs-down" /></button>
+      </details>
     </header>
     <p>{{ comment.content }}</p>
     <footer class="thumbs-up">123</footer>
@@ -41,6 +47,29 @@
   .comment-item footer {
     border-top: 1px solid #eee;
     padding: 5px;
+  }
+  .menu-edit {
+    display: flex;
+    float: right;
+    flex-direction: column;
+    width: 33px;
+    text-align: center;
+  }
+  .menu-edit[open]>summary {
+    background-color: #fff;
+  }
+  .menu-edit>summary::-webkit-details-marker {
+    display: none;
+  }
+  .menu-edit>summary::-moz-list-bullet {
+    list-style-type: none;
+  }
+  .btn-interact {
+    display: block;
+    border-width: 1px;
+    margin-top: 2px;
+    width: 100%;
+    background-color: #fff;
   }
 </style>
 <script>
