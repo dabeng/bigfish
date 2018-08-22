@@ -26,10 +26,10 @@ export default {
       for (var i = indexes.length - 1; i >= 0; i--) {
         state.comments.splice(indexes[i], 1)
       }
+    },
+    updateOneComment (state, item) {
+      state.comments.splice(item.index, 1, { ...item.comment, key: item.key })
     }
-    // setTopic (state, topic) {
-    //   state.currentTopic = topic
-    // }
   },
   actions: {
     getComments ({ dispatch, commit, state }, topicId) {
@@ -51,11 +51,11 @@ export default {
         commit('addComment', {...comment, key: newCommentId})
       })
     },
-    updateComment ({ commit }, [ topicId, comment ]) {
-      commentIntf.updateComment(topicId, comment)
-      // .then(() => {
-      //   commit('setTopic', topic)
-      // })
+    updateComment ({ commit }, [ commentId, comment, index ]) {
+      commentIntf.updateComment(commentId, comment)
+        .then(() => {
+          commit('updateOneComment', {comment, key: commentId, index})
+        })
     },
     deleteComments ({ state, commit }, [ topicId, comments ]) {
       const indexArr = comments.map(ele => ele.index)

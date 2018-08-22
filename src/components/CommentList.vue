@@ -15,13 +15,14 @@
       avatar + date + icon
       <details class="menu-edit">
         <summary><font-awesome-icon icon="ellipsis-h" /></summary>
-        <button class="btn-interact edit-cmnt"><font-awesome-icon icon="pencil-alt" /></button>
+        <button class="btn-interact edit-cmnt" @click="triggerEdit($event)"><font-awesome-icon icon="pencil-alt" /></button>
         <button class="btn-interact thumbs-up"><font-awesome-icon icon="thumbs-up" /></button>
         <button class="btn-interact thumbs-down"><font-awesome-icon icon="thumbs-down" /></button>
       </details>
     </header>
     <p>{{ comment.content }}</p>
     <footer class="thumbs-up">123</footer>
+    <CommentEditor class="hidden" :initComment="comment" :index="index"/>
   </article>
 </div>
 </template>
@@ -73,10 +74,14 @@
   }
 </style>
 <script>
+import CommentEditor from './CommentEditor.vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'CommentList',
+  components: {
+    CommentEditor
+  },
   props: ['topicId'],
   data: function () {
     return {
@@ -107,7 +112,17 @@ export default {
     ...mapActions('comment', [
       'getComments',
       'deleteComments'
-    ])
+    ]),
+    triggerEdit (e) {
+      const cmntItem = e.currentTarget.parentNode.parentNode.parentNode
+      const cmntEditor = cmntItem.querySelector('.comment-editor')
+      if (cmntEditor.classList.contains('hidden')) {
+        cmntEditor.classList.remove('hidden')
+      } else {
+        cmntEditor.classList.add('hidden')
+      }
+      e.currentTarget.parentNode.removeAttribute('open')
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <section class="comment-editor">
+  <section :class="['comment-editor', { hidden: isHidden }]">
     <header>工具栏（markdown支持）</header>
     <textarea class="editor" placeholder="详述" v-model="currentComment.content"></textarea>
     <footer>
@@ -30,10 +30,11 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'CommentEditor',
-  props: ['topicId', 'initComment'],
+  props: ['topicId', 'initComment', 'index'],
   data: function () {
     return {
-      currentComment: this.initComment ? this.initComment : { content: '' }
+      currentComment: this.initComment ? { content: this.initComment.content } : { content: '' },
+      isHidden: false
     }
   },
   computed: mapState('comment', [
@@ -41,14 +42,15 @@ export default {
   ]),
   methods: {
     ...mapActions('comment', [
-      'createComment'
+      'createComment',
+      'updateComment'
     ]),
     saveEdit: function () {
       const _this = this
       if (this.initComment) {
-        this.updateComment([this.topicId, {...this.currentComment}])
+        this.updateComment([this.initComment.key, {...this.currentComment}, this.index])
           .then(function () {
-            // _this.viewState = true
+            _this.isHidden = true
           })
           .catch(function (err) {
             console.log(err)
