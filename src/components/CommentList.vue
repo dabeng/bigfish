@@ -1,7 +1,7 @@
 <template>
 <div class="comment-list">
   <p>
-    批处理：<button @click="deleteComments([topicId, checkedComments])">删除</button>
+    批处理：<button @click="deleteComments([topicId, Array.from(checkedCmnts)])">删除</button>
   </p>
   <article class="comment-item" v-if="commentCount === -1">
     <header><div class="spinner"></div></header>
@@ -9,21 +9,7 @@
   <article class="comment-item" v-else-if="commentCount === 0">
     <header>There is no data for the time being</header>
   </article>
-  <article class="comment-item" v-else v-for="(comment, index) of comments" :key="comment.key">
-    <header>
-      <input type="checkbox" :value="{key: comment.key, index}" v-model="checkedComments">
-      avatar + date + icon
-      <details class="menu-edit">
-        <summary><font-awesome-icon icon="ellipsis-h" /></summary>
-        <button class="btn-interact edit-cmnt" @click="triggerEdit($event)"><font-awesome-icon icon="pencil-alt" /></button>
-        <button class="btn-interact thumbs-up"><font-awesome-icon icon="thumbs-up" /></button>
-        <button class="btn-interact thumbs-down"><font-awesome-icon icon="thumbs-down" /></button>
-      </details>
-    </header>
-    <p>{{ comment.content }}</p>
-    <footer class="thumbs-up">123</footer>
-    <CommentEditor class="hidden" :initComment="comment" :index="index"/>
-  </article>
+  <CommentItem v-else v-for="(comment, index) of comments" :topicId="topicId" :comment="comment" :index="index" :key="comment.key" @checkcmnt="changeCheckedCmnts" />
 </div>
 </template>
 <style scoped>
@@ -74,18 +60,20 @@
   }
 </style>
 <script>
+import CommentItem from './CommentItem.vue'
 import CommentEditor from './CommentEditor.vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'CommentList',
   components: {
+    CommentItem,
     CommentEditor
   },
   props: ['topicId'],
   data: function () {
     return {
-      checkedComments: []
+      checkedCmnts: new Set()
     }
   },
   computed: {
@@ -113,15 +101,12 @@ export default {
       'getComments',
       'deleteComments'
     ]),
-    triggerEdit (e) {
-      const cmntItem = e.currentTarget.parentNode.parentNode.parentNode
-      const cmntEditor = cmntItem.querySelector('.comment-editor')
-      if (cmntEditor.classList.contains('hidden')) {
-        cmntEditor.classList.remove('hidden')
+    changeCheckedCmnts (checked, val) {
+      if (checked) {
+        this.checkedCmnts.add(val)
       } else {
-        cmntEditor.classList.add('hidden')
+        this.checkedCmnts.delete(val)
       }
-      e.currentTarget.parentNode.removeAttribute('open')
     }
   }
 }

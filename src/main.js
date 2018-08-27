@@ -9,11 +9,11 @@ import VueFire from 'vuefire'
 import store from './store'
 import './directives/click-outside'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faThumbsUp, faThumbsDown, faPencilAlt, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp, faThumbsDown, faPencilAlt, faEllipsisH, faEraser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.use(VueFire)
 
-library.add(faThumbsUp, faThumbsDown, faPencilAlt, faEllipsisH)
+library.add(faThumbsUp, faThumbsDown, faPencilAlt, faEllipsisH, faEraser)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

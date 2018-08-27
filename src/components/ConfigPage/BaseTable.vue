@@ -1,5 +1,5 @@
 <template>
-<div class="fish-list" v-click-outside="{ selector: '.in-edit', func: cancelEdit }">
+<div class="fish-list">
   <h1 class="subject">{{subject}}</h1>
   <p>
     批处理：<button @click="deleteRows">删除</button>
@@ -12,7 +12,7 @@
       <th></th>
     </thead>
     <tbody>
-      <tr v-for="row of rows" :key="row['.key']" :class="{ 'in-edit': row['.key'] == activeRowId }">
+      <tr v-for="row of rows" :key="row['.key']" :class="{ 'in-edit': row['.key'] == activeRowId }" v-click-outside="cancelEdit">
         <td><input type="checkbox" :value="row['.key']" v-model="checkedRows"></td>
         <td>
           <span class="value" ref="name">{{row.name}}</span>
@@ -23,7 +23,7 @@
           <textarea class="editor" :value="row.description" @input="saveEditedDesc"></textarea>
         </td>
         <td>
-          <button class="btn-edit" @click="triggerEdit(row, $event)">编辑</button>
+          <button class="btn-edit" @click.stop="triggerEdit(row, $event)">编辑</button>
           <button class="btn-save" @click="updateRow(row)">保存</button>
         </td>
       </tr>

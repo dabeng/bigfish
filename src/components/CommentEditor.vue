@@ -1,10 +1,10 @@
 <template>
-  <section :class="['comment-editor', { hidden: isHidden }]">
+  <section class="comment-editor">
     <header>工具栏（markdown支持）</header>
     <textarea class="editor" placeholder="详述" v-model="currentComment.content"></textarea>
     <footer>
       <button class="btn-save" @click="saveEdit">保存</button>
-      <button class="btn-cancel">取消</button>
+      <button class="btn-cancel" @click="cancelEdit">取消</button>
     </footer>
   </section>
 </template>
@@ -33,8 +33,8 @@ export default {
   props: ['topicId', 'initComment', 'index'],
   data: function () {
     return {
-      currentComment: this.initComment ? { content: this.initComment.content } : { content: '' },
-      isHidden: false
+      isHidden: false,
+      currentComment: this.initComment ? { content: this.initComment.content } : { content: '' }
     }
   },
   computed: mapState('comment', [
@@ -45,12 +45,12 @@ export default {
       'createComment',
       'updateComment'
     ]),
-    saveEdit: function () {
+    saveEdit () {
       const _this = this
       if (this.initComment) {
         this.updateComment([this.initComment.key, {...this.currentComment}, this.index])
           .then(function () {
-            _this.isHidden = true
+            _this.$emit('canceleditcmnt')
           })
           .catch(function (err) {
             console.log(err)
@@ -64,6 +64,10 @@ export default {
             _this.currentComment.content = ''
           })
       }
+    },
+    cancelEdit () {
+      this.currentComment = this.initComment ? { content: this.initComment.content } : { content: '' }
+      this.$emit('canceleditcmnt')
     }
   }
 }
